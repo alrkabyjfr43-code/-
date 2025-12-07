@@ -518,12 +518,30 @@
                 </div>
 
                 <div class="input-group">
+                    <label for="propertyValuation">تقييم العقار</label>
+                    <div class="input-wrapper">
+                        <span class="currency-symbol">د.ع</span>
+                        <input type="text" id="propertyValuation" placeholder="0" inputmode="numeric">
+                    </div>
+                    <div class="helper-text">القيمة الحالية للعقار حسب التقييم المهني (تُحسب ضمن رأس المال)</div>
+                </div>
+
+                <div class="input-group">
                     <label for="monthlyRent">الإيجار الشهري المتوقع</label>
                     <div class="input-wrapper">
                         <span class="currency-symbol">د.ع</span>
                         <input type="text" id="monthlyRent" placeholder="0" inputmode="numeric">
                     </div>
                     <div class="helper-text">الدخل الشهري المتوقع من إيجار العقار</div>
+                </div>
+
+                <div class="input-group">
+                    <label for="monthlyInstallment">القسط الشهري (عرض فقط)</label>
+                    <div class="input-wrapper">
+                        <span class="currency-symbol">د.ع</span>
+                        <input type="text" id="monthlyInstallment" placeholder="0" inputmode="numeric">
+                    </div>
+                    <div class="helper-text">مبلغ الدفع الشهري حسب قدرة الزبون — للعرض فقط ولا يدخل في أي عملية حسابية</div>
                 </div>
             </div>
 
@@ -794,7 +812,9 @@
                 discount: 'الخصم على سعر الوحدة',
                 previousAmount: 'المبلغ السابق لدى الشركة',
                 existingProfits: 'الأرباح المستحقة',
-                monthlyRent: 'الإيجار الشهري المتوقع'
+                propertyValuation: 'تقييم العقار',
+                monthlyRent: 'الإيجار الشهري المتوقع',
+                monthlyInstallment: 'القسط الشهري (عرض فقط)'
             };
 
             const fields = [];
@@ -905,11 +925,17 @@
 شركة المستشار المؤسسي
 تاريخ التقرير: ${now}
 
+=== البيانات المدخلة ===
+سعر الوحدة الأساسي: ${document.getElementById('propertyPrice')?.value || '0'} د.ع
+تقييم العقار: ${document.getElementById('propertyValuation')?.value || '0'} د.ع
+المبلغ المضاف: ${document.getElementById('addedAmount')?.value || '0'} د.ع
+القسط الشهري (عرض فقط): ${document.getElementById('monthlyInstallment')?.value || '0'} د.ع
+
 === الملخص المالي ===
 سعر الوحدة النهائي: ${document.getElementById('finalUnitPrice')?.textContent || '0'} د.ع
 إجمالي رأس المال: ${document.getElementById('clientCapital')?.textContent || '0'} د.ع
 المطلوب تسديده: ${document.getElementById('amountToPay')?.textContent || '0'} د.ع
-فائض القرض : ${document.getElementById('loanSurplus')?.textContent || '0'} د.ع
+فائض القرض: ${document.getElementById('loanSurplus')?.textContent || '0'} د.ع
 
 === الأرباح المتوقعة ===
 أرباح الاستثمار السنوية: ${document.getElementById('annualInvestmentProfit')?.textContent || '0'} د.ع
@@ -944,6 +970,12 @@
             const data = {
                 شركة: 'شركة المستشار المؤسسي',
                 تاريخ_التقرير: new Date().toLocaleString('ar-EG'),
+                البيانات_المدخلة: {
+                    سعر_الوحدة_الاساسي: document.getElementById('propertyPrice')?.value || '0',
+                    تقييم_العقار: document.getElementById('propertyValuation')?.value || '0',
+                    المبلغ_المضاف: document.getElementById('addedAmount')?.value || '0',
+                    القسط_الشهري_عرض_فقط: document.getElementById('monthlyInstallment')?.value || '0'
+                },
                 الملخص_المالي: {
                     سعر_الوحدة_النهائي: document.getElementById('finalUnitPrice')?.textContent || '0',
                     إجمالي_رأس_المال: document.getElementById('clientCapital')?.textContent || '0',
