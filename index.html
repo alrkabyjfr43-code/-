@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة الاستثمار العقاري | Premium Edition</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            /* Light Theme Variables */
+            --primary-hue: 220;
+            --primary: hsl(var(--primary-hue), 90%, 56%);
+            --primary-dark: hsl(var(--primary-hue), 90%, 40%);
+            --secondary: hsl(45, 90%, 50%);
+            --accent: hsl(150, 80%, 40%);
+            --danger: hsl(0, 80%, 60%);
+
+            --bg-body: #f0f4f8;
+            --bg-glass: rgba(255, 255, 255, 0.85);
+            --bg-card: rgba(255, 255, 255, 0.6);
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --border-color: rgba(255, 255, 255, 0.5);
+
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+
+            --glass-border: 1px solid rgba(255, 255, 255, 0.4);
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+        }
+
+        [data-theme="dark"] {
+            /* Dark Theme Variables */
+            --primary: hsl(var(--primary-hue), 80%, 60%);
+            --primary-dark: hsl(var(--primary-hue), 80%, 70%);
+            --bg-body: #0f172a;
+            --bg-glass: rgba(15, 23, 42, 0.75);
+            --bg-card: rgba(30, 41, 59, 0.6);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: var(--bg-body);
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(245, 158, 11, 0.08) 0%, transparent 40%);
+            min-height: 100vh;
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+
+        /* Glassmorphism Container */
+        .app-container {
+            width: 100%;
+            max-width: 1100px;
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: var(--glass-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Decorative Elements */
+        .app-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .logo-box {
+            width: 70px;
+            height: 70px;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            background: white;
+            padding: 5px;
+        }
+
+        .logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .brand-text h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.2rem;
+        }
+
+        .brand-text p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Dark Mode Toggle */
+        .theme-toggle {
+            background: var(--bg-card);
+            border: var(--glass-border);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-main);
+            font-size: 1.2rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.05);
+            background: var(--bg-body);
+        }
+
+        /* Form Section */
+        .section-title {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            /* Space for icon if needed, or currency */
+            background: var(--bg-card);
+            border: var(--glass-border);
+            border-radius: var(--radius-md);
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .input-wrapper input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+
+        .currency-symbol {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            pointer-events: none;
+        }
+
+        .helper-text {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.4rem;
+            opacity: 0.8;
+        }
+
+        /* Buttons */
+        .action-bar {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), hsl(var(--primary-hue), 80%, 45%));
+            color: white;
+            border: none;
+            box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px -5px rgba(59, 130, 246, 0.5);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--border-color);
+            color: var(--text-muted);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        /* Results Section */
+        .results-container {
+            margin-top: 3rem;
+            display: none;
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .results-container.show {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .result-card {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            border: var(--glass-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary);
+            opacity: 0.5;
+        }
+
+        .result-card.highlight {
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .result-card.highlight::after {
+            background: var(--accent);
+            opacity: 1;
+        }
+
+        .result-card.warning {
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .result-card.warning::after {
+            background: var(--secondary);
+            opacity: 1;
+        }
+
+        .result-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .result-value {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--text-main);
+            font-family: 'Outfit', sans-serif;
+            letter-spacing: -0.5px;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 99px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+
+        .badge-low {
+            background: rgba(107, 114, 128, 0.2);
+            color: var(--text-muted);
+        }
+
+        .badge-medium {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--secondary);
+        }
+
+        .badge-high {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--accent);
+        }
+
+        .badge-danger {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+        }
+
+        /* Detail Box */
+        .details-box {
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 1px dashed var(--border-color);
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .detail-item h4 {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .detail-item p {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 4rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            opacity: 0.7;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .app-container {
+                padding: 1.5rem;
+            }
+
+            .header {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .brand {
+                flex-direction: column;
+            }
+
+            .action-bar {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .theme-toggle {
+                position: absolute;
+                top: 1.5rem;
+                left: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="brand">
+                <div class="logo-box">
+                    <img src="https://karbalaholding.com/wp-content/uploads/2024/04/cropped-LOGO.jpeg" alt="Logo">
+                </div>
+                <div class="brand-text">
+                    <h1>شركة المستشار المؤسسي</h1>
+                    <p>حاسبة الاستثمار العقاري المتقدمة</p>
+                </div>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle Dark Mode">
+                <span id="themeIcon">🌙</span>
+            </button>
+        </header>
+
+        <!-- Input Form -->
+        <form id="investmentForm" onsubmit="return false;">
+            <div class="section-title">
+                <span>📋</span> بيانات العميل والاستثمار
+            </div>
+
+            <div class="form-grid">
+                <div class="input-group">
+                    <label for="discount">الخصم على سعر الوحدة</label>
+                    <div class="input-wrapper">
+                        <span class="currency-symbol">د.ع</span>
+                        <input type="text" id="discount" placeholder="0" inputmode="numeric">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="previousAmount">المبلغ السابق لدى الشركة</label>
+                    <div class="input-wrapper">
+                        <span class="currency-symbol">د.ع</span>
+                        <input type="text" id="previousAmount" placeholder="0" inputmode="numeric">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="existingProfits">الأرباح المستحقة</label>
+                    <div class="input-wrapper">
+                        <span class="currency-symbol">د.ع</span>
+                        <input type="text" id="existingProfits" placeholder="0" inputmode="numeric">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="addedAmount">المبلغ المضاف (إجباري)</label>
+                    <div class="input-wrapper">
+                        <span class="currency-symbol">د.ع</span>
+                        <input type="text" id="addedAmount" placeholder="0" inputmode="numeric">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="propertyValuation">تقييم العقار</label>
+                    <div class="input-wrapper">
+                        <span class="currency-symbol">د.ع</span>
+                        <input type="text" id="propertyValuation" placeholder="0" inputmode="numeric">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="monthlyRent">الإيجار الشهري المتوقع</label>
+                    <div class="input-wrapper">
+                        <span class="currency-symbol">د.ع</span>
+                        <input type="text" id="monthlyRent" placeholder="0" inputmode="numeric">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="propertyPrice">سعر الوحدة الأساسي</label>
+                    <div class="input-wrapper">
+                        <span class="currency-symbol">د.ع</span>
+                        <input type="text" id="propertyPrice" value="130,000,000" inputmode="numeric">
+                    </div>
+                    <div class="helper-text">الافتراضي: 130 مليون</div>
+                </div>
+            </div>
+
+            <div class="action-bar">
+                <button type="reset" class="btn btn-outline" onclick="resetApp()">
+                    <span>↺</span> إعادة تعيين
+                </button>
+                <button type="button" class="btn btn-primary" onclick="calculateInvestment()">
+                    <span>🧮</span> احسب الاستثمار
+                </button>
+            </div>
+        </form>
+
+        <!-- Results Display -->
+        <div id="resultsSection" class="results-container">
+            <div class="section-title">
+                <span>📊</span> تقرير النتائج المالية
+            </div>
+
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="result-label">1. السعر النهائي للوحدة</div>
+                    <div class="result-value" id="finalUnitPrice">0</div>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-label">2. إجمالي رأس المال</div>
+                    <div class="result-value" id="clientCapital">0</div>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-label">3. المطلوب تسديده</div>
+                    <div class="result-value">
+                        <span id="amountToPay">0</span>
+                        <span id="amountToPayBadge"></span>
+                    </div>
+                </div>
+
+                <div class="result-card" id="loanSurplusCard">
+                    <div class="result-label">4. فائض القرض / العجز</div>
+                    <div class="result-value">
+                        <span id="loanSurplus">0</span>
+                        <span id="loanSurplusBadge"></span>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-label">5. أرباح الاستثمار السنوية</div>
+                    <div class="result-value" id="annualInvestmentProfit">0</div>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-label">6. إيراد الإيجار السنوي</div>
+                    <div class="result-value" id="annualRentIncome">0</div>
+                </div>
+
+                <div class="result-card highlight">
+                    <div class="result-label">7. صافي الأرباح السنوي</div>
+                    <div class="result-value">
+                        <span id="netAnnualProfit">0</span>
+                        <span id="netProfitBadge"></span>
+                    </div>
+                </div>
+
+                <div class="result-card highlight" style="grid-column: 1 / -1;">
+                    <div class="result-label">💎 الربح الصافي الكلي (بعد 5 سنوات)</div>
+                    <div class="result-value" id="totalProfit5Year" style="font-size: 2.5rem; color: var(--accent);">0
+                    </div>
+                </div>
+            </div>
+
+            <div class="details-box">
+                <div class="section-title" style="font-size: 1rem; margin-bottom: 0;">
+                    <span>📌</span> تفاصيل مصادر الربح (خطة 5 سنوات)
+                </div>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <h4>قيمة الخصم</h4>
+                        <p id="breakdownDiscount">0</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4>صعود العقار</h4>
+                        <p id="breakdownAppreciation">0</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4>أرباح الاستثمار</h4>
+                        <p id="breakdownInvestmentProfit">0</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4>إيراد الإيجار</h4>
+                        <p id="breakdownRentIncome">0</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4>فائض القرض</h4>
+                        <p id="breakdownLoanSurplus">0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 شركة المستشار المؤسسي | جميع الحقوق محفوظة</p>
+            <p style="margin-top: 5px; font-size: 0.8em; opacity: 0.6;">تطوير: جعفر صادق رحيم الركابي</p>
+        </div>
+    </div>
+
+    <script>
+        // --- Logic Constants ---
+        const DEFAULT_UNIT_PRICE = 130000000;
+        const LOAN_AMOUNT = 120000000;
+        const PROFIT_RATE = 0.15; // 15%
+        const ANNUAL_BANK_DEDUCTION = 7941000;
+        const ANNUAL_PROPERTY_APPRECIATION = 5000000;
+        const YEARS_FOR_5_YEAR_CALC = 5;
+
+        // --- Theme Logic ---
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
+
+        // Initialize Theme
+        const savedTheme = localStorage.getItem('theme') ||
+            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        setTheme(savedTheme);
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+        });
+
+        // --- Format Helpers ---
+        function formatNumber(num) {
+            if (num === undefined || num === null) return '0';
+            return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        function parseInputValue(element) {
+            if (!element) return 0;
+            // Remove commas and convert to number
+            const val = element.value.replace(/,/g, '').trim();
+            return val === '' ? 0 : Number(val);
+        }
+
+        // --- Input Formatting (Auto-Add Commas) ---
+        const numberInputs = document.querySelectorAll('input[inputmode="numeric"]');
+        numberInputs.forEach(input => {
+            input.addEventListener('input', function (e) {
+                // Remove existing commas to get raw number
+                let value = e.target.value.replace(/,/g, '');
+                if (!isNaN(value) && value.length > 0) {
+                    // Re-format with commas
+                    e.target.value = Number(value).toLocaleString('en-US');
+                }
+            });
+        });
+
+        // --- Calculation Logic ---
+        function calculateInvestment() {
+            // Get inputs
+            const discount = parseInputValue(document.getElementById('discount'));
+            const previousAmount = parseInputValue(document.getElementById('previousAmount'));
+            const existingProfits = parseInputValue(document.getElementById('existingProfits'));
+            const addedAmount = parseInputValue(document.getElementById('addedAmount'));
+            const propertyValuation = parseInputValue(document.getElementById('propertyValuation'));
+            const monthlyRent = parseInputValue(document.getElementById('monthlyRent'));
+            // Default property price generic check
+            let rawPropertyPrice = document.getElementById('propertyPrice').value.replace(/,/g, '');
+            const propertyPrice = rawPropertyPrice === '' ? DEFAULT_UNIT_PRICE : Number(rawPropertyPrice);
+
+            // 1. Final Unit Price
+            const finalUnitPrice = propertyPrice - discount;
+
+            // 2. Client Capital
+            const clientCapital = previousAmount + existingProfits + addedAmount + propertyValuation;
+
+            // 3. Amount To Pay
+            const amountToPay = finalUnitPrice - clientCapital;
+
+            // 4. Loan Surplus
+            const loanSurplus = LOAN_AMOUNT - amountToPay;
+
+            // 5. Investment Profit
+            const surplusForProfit = Math.max(0, loanSurplus);
+            const annualInvestmentProfit = surplusForProfit * PROFIT_RATE;
+
+            // 6. Rent Income
+            const annualRentIncome = monthlyRent * 12;
+
+            // 7. Total & Net
+            const totalAnnualIncome = annualInvestmentProfit + annualRentIncome;
+            const netAnnualProfit = totalAnnualIncome - ANNUAL_BANK_DEDUCTION;
+
+            // --- Badges ---
+            updateBadge('amountToPayBadge', amountToPay, 'amountToPay');
+            updateBadge('loanSurplusBadge', loanSurplus, 'loan');
+            updateBadge('netProfitBadge', netAnnualProfit, 'net');
+
+            // --- Update UI ---
+            updateResult('finalUnitPrice', finalUnitPrice);
+            updateResult('clientCapital', clientCapital);
+            updateResult('amountToPay', amountToPay);
+
+            const loanSurplusEl = document.getElementById('loanSurplus');
+            if (loanSurplus < 0) {
+                loanSurplusEl.textContent = "عجز: " + formatNumber(Math.abs(loanSurplus));
+                document.getElementById('loanSurplusCard').classList.add('warning');
+            } else {
+                loanSurplusEl.textContent = formatNumber(loanSurplus);
+                document.getElementById('loanSurplusCard').classList.remove('warning');
+            }
+
+            updateResult('annualInvestmentProfit', annualInvestmentProfit);
+            updateResult('annualRentIncome', annualRentIncome);
+            updateResult('netAnnualProfit', netAnnualProfit);
+
+            // --- 5 Year Projection ---
+            const discount5Y = discount;
+            const appreciation5Y = ANNUAL_PROPERTY_APPRECIATION * YEARS_FOR_5_YEAR_CALC;
+            const investProfit5Y = annualInvestmentProfit * YEARS_FOR_5_YEAR_CALC;
+            const rentIncome5Y = annualRentIncome * YEARS_FOR_5_YEAR_CALC;
+            const loanSurplus5Y = loanSurplus;
+
+            const totalProfit5Y = discount5Y + appreciation5Y + investProfit5Y + rentIncome5Y + loanSurplus5Y;
+
+            updateResult('totalProfit5Year', totalProfit5Y);
+            updateResult('breakdownDiscount', discount5Y);
+            updateResult('breakdownAppreciation', appreciation5Y);
+            updateResult('breakdownInvestmentProfit', investProfit5Y);
+            updateResult('breakdownRentIncome', rentIncome5Y);
+            updateResult('breakdownLoanSurplus', loanSurplus5Y);
+
+            // Show results
+            const resultsSection = document.getElementById('resultsSection');
+            resultsSection.classList.add('show');
+            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function updateResult(id, value) {
+            const el = document.getElementById(id);
+            if (el) el.textContent = formatNumber(value);
+        }
+
+        function updateBadge(elementId, amount, type) {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+
+            let text = '';
+            let cls = 'badge';
+
+            if (type === 'loan') {
+                if (amount < 0) { text = 'عجز'; cls += ' badge-danger'; }
+                else if (amount < 5000000) { text = 'منخفض'; cls += ' badge-low'; }
+                else if (amount < 20000000) { text = 'متوسط'; cls += ' badge-medium'; }
+                else { text = 'مرتفع'; cls += ' badge-high'; }
+            } else if (type === 'amountToPay') {
+                if (amount <= 0) { text = 'لا يوجد'; cls += ' badge-low'; }
+                else if (amount < 10000000) { text = 'منخفض'; cls += ' badge-low'; }
+                else if (amount < 50000000) { text = 'متوسط'; cls += ' badge-medium'; }
+                else { text = 'مرتفع'; cls += ' badge-high'; }
+            } else if (type === 'net') {
+                if (amount < 0) { text = 'خسارة'; cls += ' badge-danger'; }
+                else if (amount < 1000000) { text = 'منخفض'; cls += ' badge-low'; }
+                else if (amount < 5000000) { text = 'متوسط'; cls += ' badge-medium'; }
+                else { text = 'مرتفع'; cls += ' badge-high'; }
+            }
+
+            el.textContent = text;
+            el.className = cls;
+        }
+
+        function resetApp() {
+            document.getElementById('investmentForm').reset();
+            document.getElementById('resultsSection').classList.remove('show');
+            // Reset visible badges
+            const badges = ['amountToPayBadge', 'loanSurplusBadge', 'netProfitBadge'];
+            badges.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) { el.textContent = ''; el.className = ''; }
+            });
+        }
+
+        // Enter key support
+        document.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                calculateInvestment();
+            }
+        });
+    </script>
+</body>
+
+</html>
+}
+});
+</script>
+</body>
+
+</html>
