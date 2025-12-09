@@ -541,7 +541,8 @@
                         <span class="currency-symbol">د.ع</span>
                         <input type="text" id="monthlyInstallment" placeholder="0" inputmode="numeric">
                     </div>
-                    <div class="helper-text">مبلغ الدفع الشهري حسب قدرة الزبون — للعرض فقط ولا يدخل في أي عملية حسابية</div>
+                    <div class="helper-text">مبلغ الدفع الشهري حسب قدرة الزبون — للعرض فقط ولا يدخل في أي عملية حسابية
+                    </div>
                 </div>
             </div>
 
@@ -562,6 +563,11 @@
             </div>
 
             <div class="results-grid">
+                <div class="result-card highlight" id="discountCard">
+                    <div class="result-label">مبلغ الخصم (من الشركة)</div>
+                    <div class="result-value" id="discountAmountDisplay">0</div>
+                </div>
+
                 <div class="result-card">
                     <div class="result-label">1. السعر النهائي للوحدة</div>
                     <div class="result-value" id="finalUnitPrice">0</div>
@@ -750,6 +756,7 @@
 
 
             // --- Update UI ---
+            updateResult('discountAmountDisplay', discount);
             updateResult('finalUnitPrice', finalUnitPrice);
             updateResult('clientCapital', clientCapital);
             updateResult('amountToPay', amountToPay);
@@ -920,38 +927,73 @@
 
         function copyToClipboard() {
             const now = new Date().toLocaleString('ar-EG');
+
+            // Gather Input Data
+            const propertyPrice = document.getElementById('propertyPrice')?.value || '0';
+            const propertyValuation = document.getElementById('propertyValuation')?.value || '0';
+            const addedAmount = document.getElementById('addedAmount')?.value || '0';
+            const discount = document.getElementById('discount')?.value || '0';
+            const previousAmount = document.getElementById('previousAmount')?.value || '0';
+            const existingProfits = document.getElementById('existingProfits')?.value || '0';
+            const monthlyRent = document.getElementById('monthlyRent')?.value || '0';
+            const monthlyInstallment = document.getElementById('monthlyInstallment')?.value || '0';
+
+            // Gather Results
+            const discountAmountDisplay = document.getElementById('discountAmountDisplay')?.textContent || '0';
+            const finalUnitPrice = document.getElementById('finalUnitPrice')?.textContent || '0';
+            const clientCapital = document.getElementById('clientCapital')?.textContent || '0';
+            const amountToPay = document.getElementById('amountToPay')?.textContent || '0';
+            const loanSurplus = document.getElementById('loanSurplus')?.textContent || '0';
+            const annualInvestmentProfit = document.getElementById('annualInvestmentProfit')?.textContent || '0';
+            const annualRentIncome = document.getElementById('annualRentIncome')?.textContent || '0';
+            const netAnnualProfit = document.getElementById('netAnnualProfit')?.textContent || '0';
+            const totalProfit5Year = document.getElementById('totalProfit5Year')?.textContent || '0';
+
+            // Gather Breakdown
+            const breakdownDiscount = document.getElementById('breakdownDiscount')?.textContent || '0';
+            const breakdownAppreciation = document.getElementById('breakdownAppreciation')?.textContent || '0';
+            const breakdownInvestmentProfit = document.getElementById('breakdownInvestmentProfit')?.textContent || '0';
+            const breakdownRentIncome = document.getElementById('breakdownRentIncome')?.textContent || '0';
+            const breakdownLoanSurplus = document.getElementById('breakdownLoanSurplus')?.textContent || '0';
+
             const text = `
-تقرير استثمار عقاري
-شركة المستشار المؤسسي
-تاريخ التقرير: ${now}
+📄 *تقرير استثمار عقاري*
+🏛️ شركة المستشار المؤسسي
+📅 تاريخ التقرير: ${now}
+━━━━━━━━━━━━━━━━━━━━━
+🔹 *ملخص النتائج المباشرة:*
+💰 **مبلغ الخصم:** ${discountAmountDisplay} د.ع
+🏷️ **السعر النهائي للوحدة:** ${finalUnitPrice} د.ع
+💵 **المبلغ المطلوب تسديده:** ${amountToPay} د.ع
+━━━━━━━━━━━━━━━━━━━━━
+📋 *البيانات المدخلة:*
+• سعر الوحدة الأساسي: ${propertyPrice} د.ع
+• مبلغ الخصم: ${discount} د.ع
+• المبلغ المضاف: ${addedAmount} د.ع
+• المبلغ السابق: ${previousAmount} د.ع
+• الأرباح المستحقة: ${existingProfits} د.ع
+• تقييم العقار: ${propertyValuation} د.ع
+• الإيجار الشهري المتوقع: ${monthlyRent} د.ع
+━━━━━━━━━━━━━━━━━━━━━
+📊 *التفاصيل المالية:*
+• إجمالي رأس المال: ${clientCapital} د.ع
+• فائض القرض: ${loanSurplus} د.ع
+• أرباح الاستثمار السنوية: ${annualInvestmentProfit} د.ع
+• إيراد الإيجار السنوي: ${annualRentIncome} د.ع
+• صافي الأرباح السنوي: ${netAnnualProfit} د.ع
+━━━━━━━━━━━━━━━━━━━━━
+💎 *إجمالي الأرباح المتوقعة (بعد 5 سنوات):*
+**${totalProfit5Year} د.ع**
 
-=== البيانات المدخلة ===
-سعر الوحدة الأساسي: ${document.getElementById('propertyPrice')?.value || '0'} د.ع
-تقييم العقار: ${document.getElementById('propertyValuation')?.value || '0'} د.ع
-المبلغ المضاف: ${document.getElementById('addedAmount')?.value || '0'} د.ع
-القسط الشهري (عرض فقط): ${document.getElementById('monthlyInstallment')?.value || '0'} د.ع
-
-=== الملخص المالي ===
-سعر الوحدة النهائي: ${document.getElementById('finalUnitPrice')?.textContent || '0'} د.ع
-إجمالي رأس المال: ${document.getElementById('clientCapital')?.textContent || '0'} د.ع
-المطلوب تسديده: ${document.getElementById('amountToPay')?.textContent || '0'} د.ع
-فائض القرض: ${document.getElementById('loanSurplus')?.textContent || '0'} د.ع
-
-=== الأرباح المتوقعة ===
-أرباح الاستثمار السنوية: ${document.getElementById('annualInvestmentProfit')?.textContent || '0'} د.ع
-إيراد الإيجار السنوي: ${document.getElementById('annualRentIncome')?.textContent || '0'} د.ع
-صافي الأرباح السنوي: ${document.getElementById('netAnnualProfit')?.textContent || '0'} د.ع
-إجمالي الأرباح بعد 5 سنوات: ${document.getElementById('totalProfit5Year')?.textContent || '0'} د.ع
-
-=== تفاصيل مصادر الربح (5 سنوات) ===
-قيمة الخصم: ${document.getElementById('breakdownDiscount')?.textContent || '0'} د.ع
-صعود العقار: ${document.getElementById('breakdownAppreciation')?.textContent || '0'} د.ع
-أرباح الاستثمار: ${document.getElementById('breakdownInvestmentProfit')?.textContent || '0'} د.ع
-إيراد الإيجار: ${document.getElementById('breakdownRentIncome')?.textContent || '0'} د.ع
-فائض القرض: ${document.getElementById('breakdownLoanSurplus')?.textContent || '0'} د.ع
-
-ملاحظة: جميع القيم متوقعة وتقديرية
-            `.trim();
+📌 *تفاصيل مصادر الربح (5 سنوات):*
+• قيمة الخصم: ${breakdownDiscount} د.ع
+• صعود العقار: ${breakdownAppreciation} د.ع
+• أرباح الاستثمار: ${breakdownInvestmentProfit} د.ع
+• إيراد الإيجار: ${breakdownRentIncome} د.ع
+• فائض القرض: ${breakdownLoanSurplus} د.ع
+━━━━━━━━━━━━━━━━━━━━━
+⚠️ ملاحظة: جميع القيم متوقعة وتقديرية.
+`.trim();
 
             navigator.clipboard.writeText(text).then(() => {
                 alert('✓ تم نسخ النتائج إلى الحافظة بنجاح');
