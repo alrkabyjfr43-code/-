@@ -458,6 +458,14 @@
                 <div class="brand-text">
                     <h1>شركة المستشار المؤسسي</h1>
                     <p>حاسبة الاستثمار العقاري المتقدمة</p>
+                    <p style="font-size: 0.85rem; margin-top: 0.3rem;">📍 كربلاء - حي المعلمين بجانب مركز الشرطة</p>
+                    <p style="font-size: 0.85rem; margin-top: 0.2rem;">🌐 <a href="https://karbalaholding.com/"
+                            target="_blank" style="color: var(--primary); text-decoration: none;">karbalaholding.com</a>
+                    </p>
+                    <p style="font-size: 0.85rem; margin-top: 0.2rem;">📞 07760012200 | 07860012200</p>
+                    <p style="font-size: 0.85rem; margin-top: 0.2rem;">🏗️ <a
+                            href="https://www.facebook.com/share/p/1Bhw8e8oiX/?mibextid=wwXIfr" target="_blank"
+                            style="color: var(--primary); text-decoration: none;">مشروع المجد السكني</a></p>
                 </div>
             </div>
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle Dark Mode">
@@ -468,7 +476,40 @@
         <!-- Input Form -->
         <form id="investmentForm" onsubmit="return false;">
             <div class="section-title">
-                <span>📋</span> بيانات العميل والاستثمار
+                <span>�</span> بيانات العميل
+            </div>
+
+            <div class="form-grid">
+                <div class="input-group">
+                    <label for="customerName">اسم الزبون</label>
+                    <div class="input-wrapper">
+                        <span class="currency-symbol">👤</span>
+                        <input type="text" id="customerName" placeholder="أدخل اسم الزبون">
+                    </div>
+                    <div class="helper-text">الاسم الكامل للعميل</div>
+                </div>
+
+                <div class="input-group">
+                    <label for="customerAddress">عنوان الزبون</label>
+                    <div class="input-wrapper">
+                        <span class="currency-symbol">📍</span>
+                        <input type="text" id="customerAddress" placeholder="أدخل عنوان الزبون">
+                    </div>
+                    <div class="helper-text">عنوان سكن العميل</div>
+                </div>
+
+                <div class="input-group">
+                    <label for="customerPhone">رقم هاتف الزبون</label>
+                    <div class="input-wrapper">
+                        <span class="currency-symbol">📱</span>
+                        <input type="text" id="customerPhone" placeholder="07XXXXXXXXX" inputmode="tel">
+                    </div>
+                    <div class="helper-text">رقم الهاتف للتواصل</div>
+                </div>
+            </div>
+
+            <div class="section-title" style="margin-top: 2rem;">
+                <span>📋</span> بيانات الاستثمار
             </div>
 
             <div class="form-grid">
@@ -850,13 +891,31 @@
             container.style.background = '#fff';
             container.style.width = '800px';
 
+            // Get customer info
+            const customerName = document.getElementById('customerName')?.value || '-';
+            const customerAddress = document.getElementById('customerAddress')?.value || '-';
+            const customerPhone = document.getElementById('customerPhone')?.value || '-';
+
             // Header
             const header = document.createElement('div');
             header.innerHTML = `
                 <div style="text-align:center; margin-bottom:10px;">
                     <h2 style="margin:0;">شركة المستشار المؤسسي</h2>
-                    <div style="color:#666; font-size:0.95rem;">تقرير استثمار عقاري - ملخص متوقع ومالي</div>
+                    <div style="color:#666; font-size:0.9rem; margin-top:4px;">📍 كربلاء - حي المعلمين بجانب مركز الشرطة</div>
+                    <div style="color:#666; font-size:0.85rem; margin-top:3px;">🌐 karbalaholding.com</div>
+                    <div style="color:#666; font-size:0.85rem; margin-top:3px;">📞 07760012200 | 07860012200</div>
+                    <div style="color:#666; font-size:0.85rem; margin-top:3px;">🏗️ مشروع المجد السكني: fb.com/share/p/1Bhw8e8oiX</div>
+                    <div style="color:#333; font-size:0.95rem; margin-top:10px; font-weight:600;">تقرير استثمار عقاري - ملخص متوقع ومالي</div>
                     <div style="color:#666; font-size:0.85rem; margin-top:6px;">تاريخ التقرير: ${dateStr}</div>
+                </div>
+                <hr style="border:none; border-top:1px solid #e6e6e6; margin:12px 0;">
+                <div style="margin-bottom:12px; padding:10px; background:#f9f9f9; border-radius:6px;">
+                    <div style="font-weight:700; margin-bottom:6px; color:#333;">بيانات العميل:</div>
+                    <div style="font-size:0.9rem; color:#555; line-height:1.8;">
+                        <div><strong>الاسم:</strong> ${customerName}</div>
+                        <div><strong>العنوان:</strong> ${customerAddress}</div>
+                        <div><strong>رقم الهاتف:</strong> ${customerPhone}</div>
+                    </div>
                 </div>
                 <hr style="border:none; border-top:1px solid #e6e6e6; margin:12px 0;">
             `;
@@ -928,6 +987,11 @@
         function copyToClipboard() {
             const now = new Date().toLocaleString('ar-EG');
 
+            // Gather Customer Info
+            const customerName = document.getElementById('customerName')?.value || '-';
+            const customerAddress = document.getElementById('customerAddress')?.value || '-';
+            const customerPhone = document.getElementById('customerPhone')?.value || '-';
+
             // Gather Input Data
             const propertyPrice = document.getElementById('propertyPrice')?.value || '0';
             const propertyValuation = document.getElementById('propertyValuation')?.value || '0';
@@ -959,7 +1023,16 @@
             const text = `
 📄 *تقرير استثمار عقاري*
 🏛️ شركة المستشار المؤسسي
-📅 تاريخ التقرير: ${now}
+� كربلاء - حي المعلمين بجانب مركز الشرطة
+🌐 https://karbalaholding.com/
+📞 07760012200 | 07860012200
+🏗️ مشروع المجد السكني: https://www.facebook.com/share/p/1Bhw8e8oiX/?mibextid=wwXIfr
+�📅 تاريخ التقرير: ${now}
+━━━━━━━━━━━━━━━━━━━━━
+👤 *بيانات العميل:*
+• الاسم: ${customerName}
+• العنوان: ${customerAddress}
+• رقم الهاتف: ${customerPhone}
 ━━━━━━━━━━━━━━━━━━━━━
 🔹 *ملخص النتائج المباشرة:*
 💰 **مبلغ الخصم:** ${discountAmountDisplay} د.ع
