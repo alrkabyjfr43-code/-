@@ -8,7 +8,9 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700;800&display=swap"
+        rel="stylesheet">
     <!-- jsPDF Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
@@ -20,17 +22,17 @@
             --bg-glass: rgba(26, 32, 44, 0.85);
             --bg-card: rgba(35, 43, 59, 0.6);
             --bg-input: rgba(15, 18, 25, 0.8);
-            
+
             --gold-primary: #d4af37;
             --gold-light: #fbeea4;
             --emerald: #10b981;
             --danger: #ef4444;
-            
+
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --border-glass: rgba(212, 175, 55, 0.15);
             --border-focus: rgba(212, 175, 55, 0.5);
-            
+
             --shadow-glow: 0 0 20px rgba(212, 175, 55, 0.15);
             --shadow-red: 0 0 15px rgba(239, 68, 68, 0.6);
             --radius-lg: 20px;
@@ -63,7 +65,7 @@
             left: -10%;
             width: 60vw;
             height: 60vw;
-            background: radial-gradient(circle, rgba(212,175,55,0.04) 0%, transparent 60%);
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.04) 0%, transparent 60%);
             z-index: 0;
             pointer-events: none;
         }
@@ -76,7 +78,7 @@
             -webkit-backdrop-filter: blur(30px);
             border: 1px solid var(--border-glass);
             border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-glow), inset 0 1px 0 rgba(255,255,255,0.05);
+            box-shadow: var(--shadow-glow), inset 0 1px 0 rgba(255, 255, 255, 0.05);
             padding: 3rem;
             position: relative;
             z-index: 1;
@@ -86,16 +88,27 @@
         .dev-badge {
             position: absolute;
             top: 25px;
-            left: -35px;
-            background: linear-gradient(135deg, var(--gold-primary), #a38421);
-            color: #000;
-            padding: 8px 45px;
+            left: 25px;
+            background: rgba(212, 175, 55, 0.08);
+            border: 1px solid var(--border-focus);
+            color: var(--gold-light);
+            padding: 8px 20px;
             font-size: 0.85rem;
-            font-weight: 800;
-            transform: rotate(-45deg);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            font-weight: 700;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             z-index: 10;
             letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dev-badge::before {
+            content: '✨';
+            font-size: 1rem;
         }
 
         .header {
@@ -119,7 +132,7 @@
             border-radius: var(--radius-md);
             overflow: hidden;
             border: 2px solid var(--gold-primary);
-            box-shadow: 0 0 20px rgba(212,175,55,0.25);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.25);
             background: #fff;
             padding: 4px;
         }
@@ -251,7 +264,7 @@
 
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 0 25px rgba(212,175,55,0.4);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
         }
 
         .btn-outline {
@@ -262,7 +275,7 @@
 
         .btn-outline:hover {
             border-color: var(--gold-primary);
-            background: rgba(212,175,55,0.05);
+            background: rgba(212, 175, 55, 0.05);
             transform: translateY(-2px);
         }
 
@@ -277,8 +290,15 @@
         }
 
         @keyframes slideUpFade {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .results-grid {
@@ -315,9 +335,10 @@
         }
 
         .result-card.highlight {
-            background: linear-gradient(145deg, rgba(35, 43, 59, 0.8), rgba(212,175,55,0.06));
-            border-color: rgba(212,175,55,0.4);
+            background: linear-gradient(145deg, rgba(35, 43, 59, 0.8), rgba(212, 175, 55, 0.06));
+            border-color: rgba(212, 175, 55, 0.4);
         }
+
         .result-card.highlight::after {
             width: 4px;
             opacity: 1;
@@ -325,20 +346,22 @@
 
         .result-card.supreme {
             grid-column: 1 / -1;
-            background: linear-gradient(135deg, rgba(212,175,55,0.1), rgba(16,185,129,0.05));
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(16, 185, 129, 0.05));
             border: 2px solid var(--gold-primary);
             text-align: center;
         }
+
         .result-card.supreme .result-value {
             font-size: 3.2rem;
             color: var(--gold-primary);
-            text-shadow: 0 0 25px rgba(212,175,55,0.25);
+            text-shadow: 0 0 25px rgba(212, 175, 55, 0.25);
         }
 
         .result-card.warning {
             background: rgba(239, 68, 68, 0.05);
             border-color: rgba(239, 68, 68, 0.3);
         }
+
         .result-card.warning::after {
             background: var(--danger);
             opacity: 0.8;
@@ -365,7 +388,7 @@
             padding: 2rem;
             margin-top: 2rem;
             border: 1px solid var(--border-focus);
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
         }
 
         .details-grid {
@@ -407,44 +430,52 @@
             padding: 5px 15px;
             border: 1px solid var(--gold-primary);
             border-radius: 50px;
-            background: rgba(212,175,55,0.05);
+            background: rgba(212, 175, 55, 0.05);
         }
 
         @media (max-width: 768px) {
-            body { 
-                padding: 0; 
+            body {
+                padding: 0;
                 background: var(--bg-body-1);
             }
-            .app-container { 
-                padding: 1.5rem 1rem; 
-                border-radius: 0; 
+
+            .app-container {
+                padding: 1.5rem 1rem;
+                border-radius: 0;
                 border: none;
                 box-shadow: none;
                 min-height: 100vh;
             }
-            .header { 
-                flex-direction: column; 
-                text-align: center; 
-                gap: 1rem; 
+
+            .header {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
                 border-bottom: none;
                 margin-bottom: 1.5rem;
                 padding-bottom: 0;
             }
-            .brand { 
-                flex-direction: column; 
+
+            .brand {
+                flex-direction: column;
                 gap: 0.8rem;
             }
+
             .logo-box {
-                width: 75px; height: 75px;
+                width: 75px;
+                height: 75px;
                 margin: 0 auto;
-                box-shadow: 0 0 30px rgba(212,175,55,0.3);
+                box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
             }
+
             .brand-text h1 {
                 font-size: 1.6rem;
             }
+
             .brand-text p {
                 font-size: 0.85rem;
             }
+
             /* Hide the long text on mobile to save space */
             .brand-text p:nth-child(3),
             .brand-text p:nth-child(4),
@@ -452,122 +483,133 @@
             .brand-text p:nth-child(6) {
                 display: none;
             }
-            
+
             .section-title {
                 font-size: 1.2rem;
                 margin-bottom: 1.2rem;
                 justify-content: center;
-                background: linear-gradient(90deg, transparent, rgba(212,175,55,0.1), transparent);
+                background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
                 padding: 10px 0;
                 border-radius: 8px;
             }
+
             .form-grid {
                 gap: 1.2rem;
                 margin-bottom: 2rem;
                 display: flex;
                 flex-direction: column;
             }
+
             .input-wrapper input {
                 padding: 1.2rem 1.2rem 1.2rem 3rem;
                 font-size: 1.1rem;
                 background: rgba(15, 18, 25, 0.95);
-                border: 1px solid rgba(212,175,55,0.3);
+                border: 1px solid rgba(212, 175, 55, 0.3);
                 border-radius: 16px;
-                box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+                box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
             }
+
             .currency-symbol {
                 font-size: 1rem;
             }
+
             .helper-text {
                 font-size: 0.8rem;
                 text-align: right;
                 padding-right: 5px;
             }
-            
-            .action-bar { 
-                flex-direction: row; 
+
+            .action-bar {
+                flex-direction: row;
                 gap: 0.8rem;
                 margin-top: 1rem;
                 padding-top: 1.5rem;
-                border-top: 1px solid rgba(255,255,255,0.05);
+                border-top: 1px solid rgba(255, 255, 255, 0.05);
             }
-            .btn { 
+
+            .btn {
                 padding: 1.2rem 1rem;
                 font-size: 1.05rem;
                 border-radius: 16px;
                 justify-content: center;
             }
+
             .btn-primary {
                 flex: 2;
-                box-shadow: 0 10px 25px rgba(212,175,55,0.3);
+                box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
             }
+
             .btn-outline {
                 flex: 1;
             }
-            
+
             .results-container {
                 margin-top: 2rem;
             }
+
             .results-grid {
                 display: flex;
                 flex-direction: column;
                 gap: 1rem;
             }
+
             .result-card {
                 padding: 1.5rem 1.2rem;
                 border-radius: 16px;
                 text-align: center;
                 background: linear-gradient(145deg, rgba(35, 43, 59, 0.8), rgba(20, 25, 35, 0.9));
             }
+
             .result-card::after {
                 width: 100%;
                 height: 4px;
                 top: 0;
                 left: 0;
             }
+
             .result-card.highlight::after {
                 height: 4px;
                 width: 100%;
             }
+
             .result-label {
                 font-size: 0.9rem;
                 margin-bottom: 0.8rem;
             }
+
             .result-value {
                 font-size: 1.6rem;
             }
+
             .result-card.supreme {
                 padding: 2rem 1rem;
                 border-radius: 20px;
             }
+
             .result-card.supreme .result-value {
                 font-size: 2.2rem;
             }
-            
+
             .details-box {
                 padding: 1.5rem 1rem;
                 border-radius: 16px;
             }
+
             .details-grid {
                 display: flex;
                 flex-direction: column;
                 gap: 1.2rem;
                 text-align: center;
             }
-            
-            .dev-badge { 
-                display: block;
+
+            .dev-badge {
                 position: relative;
                 top: 0;
                 left: 0;
-                transform: none;
-                width: fit-content;
                 margin: 0 auto 1.5rem auto;
-                border-radius: 50px;
-                font-size: 0.8rem;
-                padding: 6px 20px;
+                width: fit-content;
             }
-            
+
             .footer {
                 margin-top: 3rem;
                 padding-bottom: 2rem;
@@ -590,11 +632,15 @@
                 </div>
                 <div class="brand-text">
                     <h1>شركة المستشار المؤسسي</h1>
-                    <p>حاسبة الاستثمار العقاري المتقدمة</p>
+                    <p>حاسبة الاستثمار العقاري</p>
                     <p style="font-size: 0.85rem; margin-top: 0.4rem;">📍 كربلاء - حي المعلمين بجانب مركز الشرطة</p>
-                    <p style="font-size: 0.85rem; margin-top: 0.2rem;">🌐 <a href="https://karbalaholding.com/" target="_blank" style="color: var(--gold-primary); text-decoration: none;">karbalaholding.com</a></p>
+                    <p style="font-size: 0.85rem; margin-top: 0.2rem;">🌐 <a href="https://karbalaholding.com/"
+                            target="_blank"
+                            style="color: var(--gold-primary); text-decoration: none;">karbalaholding.com</a></p>
                     <p style="font-size: 0.85rem; margin-top: 0.2rem;">📞 07760012200 | 07860012200</p>
-                    <p style="font-size: 0.85rem; margin-top: 0.2rem;">🏗️ <a href="https://www.facebook.com/share/p/1Bhw8e8oiX/?mibextid=wwXIfr" target="_blank" style="color: var(--gold-primary); text-decoration: none;">مشروع المجد السكني</a></p>
+                    <p style="font-size: 0.85rem; margin-top: 0.2rem;">🏗️ <a
+                            href="https://www.facebook.com/share/p/1Bhw8e8oiX/?mibextid=wwXIfr" target="_blank"
+                            style="color: var(--gold-primary); text-decoration: none;">مشروع المجد السكني</a></p>
                 </div>
             </div>
         </header>
@@ -613,24 +659,6 @@
                         <input type="text" id="customerName" placeholder="أدخل اسم الزبون">
                     </div>
                     <div class="helper-text">الاسم الكامل للعميل</div>
-                </div>
-
-                <div class="input-group">
-                    <label for="customerAddress">عنوان الزبون</label>
-                    <div class="input-wrapper">
-                        <span class="currency-symbol">📍</span>
-                        <input type="text" id="customerAddress" placeholder="أدخل عنوان الزبون">
-                    </div>
-                    <div class="helper-text">عنوان سكن العميل</div>
-                </div>
-
-                <div class="input-group" id="phoneGroup">
-                    <label for="customerPhone">رقم هاتف الزبون</label>
-                    <div class="input-wrapper">
-                        <span class="currency-symbol">📱</span>
-                        <input type="text" id="customerPhone" placeholder="07XXXXXXXXX" inputmode="numeric">
-                    </div>
-                    <div class="helper-text" id="phoneHelperText">يجب إدخال 11 رقماً بالضبط</div>
                 </div>
             </div>
 
@@ -699,7 +727,9 @@
                 </div>
 
                 <div class="result-card highlight">
-                    <div class="result-label">المبلغ الكلي <br><small style="font-size:0.75rem; font-weight:normal; opacity:0.8;">(قيمة العقار + المبلغ المدفوع)</small></div>
+                    <div class="result-label">المبلغ الكلي <br><small
+                            style="font-size:0.75rem; font-weight:normal; opacity:0.8;">(قيمة العقار + المبلغ
+                            المدفوع)</small></div>
                     <div class="result-value" id="totalCapitalAmount">0</div>
                 </div>
 
@@ -734,12 +764,15 @@
                 </div>
 
                 <div class="result-card highlight">
-                    <div class="result-label">إجمالي الأرباح السنوية <br><small style="font-size:0.75rem; font-weight:normal; opacity:0.8;">(دون أي خصومات)</small></div>
+                    <div class="result-label">إجمالي الأرباح السنوية <br><small
+                            style="font-size:0.75rem; font-weight:normal; opacity:0.8;">(دون أي خصومات)</small></div>
                     <div class="result-value" id="totalAnnualIncome">0</div>
                 </div>
 
                 <div class="result-card highlight">
-                    <div class="result-label">صافي الأرباح السنوي المتوقع <br><small style="font-size:0.75rem; font-weight:normal; opacity:0.8;">(بعد خصم القسط الشهري 600,000 د.ع)</small></div>
+                    <div class="result-label">صافي الأرباح السنوي المتوقع <br><small
+                            style="font-size:0.75rem; font-weight:normal; opacity:0.8;">(بعد خصم القسط الشهري 600,000
+                            د.ع)</small></div>
                     <div class="result-value" id="netAnnualProfit">0</div>
                 </div>
 
@@ -766,9 +799,11 @@
                         <h4>إيراد الإيجار المتوقع</h4>
                         <p id="breakdownRentIncome">0</p>
                     </div>
-                    <div class="detail-item" style="grid-column: 1 / -1; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-glass);">
+                    <div class="detail-item"
+                        style="grid-column: 1 / -1; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-glass);">
                         <h4 style="color: var(--emerald);">الرصيد الكلي مع الأرباح والأصول المستثمرة خلال 5 سنوات</h4>
-                        <p id="totalBalance5Year" style="color: var(--emerald); text-shadow: 0 0 10px rgba(16,185,129,0.2);">0</p>
+                        <p id="totalBalance5Year"
+                            style="color: var(--emerald); text-shadow: 0 0 10px rgba(16,185,129,0.2);">0</p>
                     </div>
                 </div>
             </div>
@@ -784,7 +819,8 @@
         </div>
 
         <div class="footer">
-            <p style="color: var(--text-muted); font-size: 0.9rem;">© 2026 شركة المستشار المؤسسي | جميع الحقوق محفوظة</p>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">© 2026 شركة المستشار المؤسسي | جميع الحقوق محفوظة
+            </p>
             <div class="dev-name">قسم البحث والتطوير: جعفر الركابي</div>
         </div>
     </div>
@@ -797,23 +833,6 @@
         const ANNUAL_BANK_DEDUCTION = 7200000;
         const ANNUAL_PROPERTY_APPRECIATION = 5000000;
         const YEARS_FOR_CALC = 5;
-
-        // --- Phone Validation Logic ---
-        const phoneInput = document.getElementById('customerPhone');
-        const phoneGroup = document.getElementById('phoneGroup');
-        const phoneHelper = document.getElementById('phoneHelperText');
-
-        phoneInput.addEventListener('input', function(e) {
-            // Remove non-numeric characters for length check
-            let val = e.target.value.replace(/[^0-9]/g, '');
-            if(val.length > 0 && val.length !== 11) {
-                phoneGroup.classList.add('invalid');
-                phoneHelper.textContent = 'إضاءة حمراء: يجب إدخال 11 رقماً بالضبط!';
-            } else {
-                phoneGroup.classList.remove('invalid');
-                phoneHelper.textContent = 'رقم الهاتف للتواصل';
-            }
-        });
 
         // --- Format Helpers ---
         function formatNumber(num) {
@@ -828,7 +847,7 @@
         }
 
         // --- Input Formatting (Auto-Add Commas) ---
-        const numberInputs = document.querySelectorAll('input[inputmode="numeric"]:not(#customerPhone)');
+        const numberInputs = document.querySelectorAll('input[inputmode="numeric"]');
         numberInputs.forEach(input => {
             input.addEventListener('input', function (e) {
                 let value = e.target.value.replace(/,/g, '');
@@ -883,16 +902,16 @@
             const appreciation5Y = ANNUAL_PROPERTY_APPRECIATION * YEARS_FOR_CALC;
             const investProfit5Y = annualInvestmentProfit * YEARS_FOR_CALC;
             const rentIncome5Y = annualRentIncome * YEARS_FOR_CALC;
-            
+
             // Total Profit Over 5 Years
             const totalProfit5Y = appreciation5Y + investProfit5Y + rentIncome5Y;
-            
+
             // Total Balance (الرصيد الكلي مع الارباح والاصول المستثمر بها) - Specific User formula
             const totalBalance = appreciation5Y + investProfit5Y + rentIncome5Y + loanSurplus;
 
             updateResult('totalProfit5Year', totalProfit5Y);
             updateResult('totalBalance5Year', totalBalance);
-            
+
             updateResult('breakdownAppreciation', appreciation5Y);
             updateResult('breakdownInvestmentProfit', investProfit5Y);
             updateResult('breakdownRentIncome', rentIncome5Y);
@@ -912,8 +931,6 @@
         function resetApp() {
             document.getElementById('investmentForm').reset();
             document.getElementById('resultsSection').classList.remove('show');
-            phoneGroup.classList.remove('invalid');
-            phoneHelper.textContent = 'رقم الهاتف للتواصل';
         }
 
         // --- PDF Download Function ---
@@ -957,26 +974,15 @@
             container.style.width = '800px';
 
             const customerName = document.getElementById('customerName')?.value || '-';
-            const customerAddress = document.getElementById('customerAddress')?.value || '-';
-            const customerPhone = document.getElementById('customerPhone')?.value || '-';
 
             const header = document.createElement('div');
             header.innerHTML = `
                 <div style="text-align:center; margin-bottom:15px;">
                     <h2 style="margin:0; color: #d4af37; font-size: 1.6rem; font-weight: 800;">التقرير الاستشاري للاستبدال والاستثمار العقاري</h2>
-                    <div style="color:#333; font-size:1.2rem; margin-top:8px; font-weight:800;">من شركة المستشار المؤسسي إلى السيد/ة ${customerName}</div>
+                    <div style="color:#333; font-size:1.2rem; margin-top:8px; font-weight:800;">من شركة المستشار المؤسسي إلى السيد/ة: ${customerName}</div>
                     <div style="color:#666; font-size:0.85rem; margin-top:6px;">تاريخ التقرير: ${dateStr}</div>
                 </div>
                 <hr style="border:none; border-top:2px solid #d4af37; margin:12px 0;">
-                <div style="margin-bottom:12px; padding:10px; background:#fdfbf4; border-radius:6px; border: 1px solid #f5df8b;">
-                    <div style="font-weight:800; margin-bottom:6px; color:#333;">بيانات العميل:</div>
-                    <div style="font-size:0.9rem; color:#555; line-height:1.8;">
-                        <div><strong>الاسم:</strong> ${customerName}</div>
-                        <div><strong>العنوان:</strong> ${customerAddress}</div>
-                        <div><strong>رقم الهاتف:</strong> ${customerPhone}</div>
-                    </div>
-                </div>
-                <hr style="border:none; border-top:1px solid #e6e6e6; margin:12px 0;">
             `;
             container.appendChild(header);
 
@@ -1042,7 +1048,6 @@
                 <div style="font-weight: 800; color: #333; font-size: 1rem; margin-bottom: 10px;">معلومات التواصل:</div>
                 <div style="color:#666; font-size:0.9rem; margin-bottom:4px;">🌐 الموقع الإلكتروني: karbalaholding.com</div>
                 <div style="color:#666; font-size:0.9rem; margin-bottom:4px;">📍 موقع الشركة: كربلاء - حي المعلمين بجانب مركز الشرطة</div>
-                <div style="color:#666; font-size:0.9rem; margin-bottom:4px;">📍 مكان الشركة: كربلاء - حي المعلمين بجانب مركز الشرطة</div>
                 <div style="color:#666; font-size:0.9rem; margin-bottom:10px;">🏗️ مشروع المجد السكني: https://www.facebook.com/share/p/1Bhw8e8oiX/?mibextid=wwXIfr</div>
                 <div style="font-weight: 800; color: #d4af37; font-size: 1.1rem; margin-bottom: 5px;">قسم البحث والتطوير: جعفر الركابي</div>
                 <p style="font-size: 0.8rem; color: #777; margin:0;">جميع الحقوق محفوظة لشركة المستشار المؤسسي © 2026</p>
@@ -1056,8 +1061,6 @@
             const now = new Date().toLocaleString('ar-EG');
 
             const customerName = document.getElementById('customerName')?.value || '-';
-            const customerAddress = document.getElementById('customerAddress')?.value || '-';
-            const customerPhone = document.getElementById('customerPhone')?.value || '-';
 
             const propertyPrice = document.getElementById('propertyPrice')?.value || '0';
             const amount = document.getElementById('amount')?.value || '0';
@@ -1083,13 +1086,8 @@
 
             const text = `
 📄 *التقرير الاستشاري للاستبدال والاستثمار العقاري*
-من شركة المستشار المؤسسي إلى السيد/ة ${customerName}
+من شركة المستشار المؤسسي إلى السيد/ة: ${customerName}
 📅 تاريخ التقرير: ${now}
-━━━━━━━━━━━━━━━━━━━━━
-👤 *بيانات العميل:*
-• الاسم: ${customerName}
-• العنوان: ${customerAddress}
-• رقم الهاتف: ${customerPhone}
 ━━━━━━━━━━━━━━━━━━━━━
 📋 *البيانات المدخلة:*
 • سعر الوحدة السكنية: ${propertyPrice} د.ع
@@ -1121,7 +1119,6 @@
 📞 *معلومات التواصل:*
 • الموقع الإلكتروني: karbalaholding.com
 • موقع الشركة: كربلاء - حي المعلمين بجانب مركز الشرطة
-• مكان الشركة: كربلاء - حي المعلمين بجانب مركز الشرطة
 • مشروع المجد السكني: https://www.facebook.com/share/p/1Bhw8e8oiX/?mibextid=wwXIfr
 • هواتف الشركة: 07760012200 | 07860012200
 ━━━━━━━━━━━━━━━━━━━━━
@@ -1211,4 +1208,5 @@
         });
     </script>
 </body>
+
 </html>
