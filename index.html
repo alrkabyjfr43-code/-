@@ -667,7 +667,7 @@
                 </div>
 
                 <div class="input-group">
-                    <label for="monthlyRent">الإيجار الشهري المتوقع</label>
+                    <label for="monthlyRent">الإيجار الشهري المتوقع للوحدة السكنية</label>
                     <div class="input-wrapper">
                         <span class="currency-symbol">د.ع</span>
                         <input type="text" id="monthlyRent" value="350,000" inputmode="numeric">
@@ -698,11 +698,6 @@
                     <div class="result-value" id="finalUnitPrice">0</div>
                 </div>
 
-                <div class="result-card">
-                    <div class="result-label">قيمة العقار الحالي</div>
-                    <div class="result-value" id="clientCapital">0</div>
-                </div>
-
                 <div class="result-card highlight">
                     <div class="result-label">المبلغ الكلي <br><small style="font-size:0.75rem; font-weight:normal; opacity:0.8;">(قيمة العقار + المبلغ المدفوع)</small></div>
                     <div class="result-value" id="totalCapitalAmount">0</div>
@@ -716,6 +711,11 @@
                 <div class="result-card">
                     <div class="result-label">المطلوب تسديده للوحدة السكنية</div>
                     <div class="result-value" id="amountToPay">0</div>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-label">مقدار القرض</div>
+                    <div class="result-value" id="loanAmountDisplay">0</div>
                 </div>
 
                 <div class="result-card" id="loanSurplusCard">
@@ -739,18 +739,13 @@
                 </div>
 
                 <div class="result-card highlight">
-                    <div class="result-label">صافي الأرباح السنوي المتوقع <br><small style="font-size:0.75rem; font-weight:normal; opacity:0.8;">(بعد خصم 7.2 مليون للقرض)</small></div>
+                    <div class="result-label">صافي الأرباح السنوي المتوقع <br><small style="font-size:0.75rem; font-weight:normal; opacity:0.8;">(بعد خصم القسط الشهري 600,000 د.ع)</small></div>
                     <div class="result-value" id="netAnnualProfit">0</div>
                 </div>
 
                 <div class="result-card supreme">
                     <div class="result-label" style="color: #fff;">💎 إجمالي الأرباح المتوقعة (لمدة 5 سنوات)</div>
                     <div class="result-value" id="totalProfit5Year">0</div>
-                </div>
-                
-                <div class="result-card supreme" style="background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(212,175,55,0.05)); border-color: var(--emerald);">
-                    <div class="result-label" style="color: #fff;">💰 الرصيد الكلي مع الارباح والاصول المستثمر بها خلال 5 سنوات</div>
-                    <div class="result-value" id="totalBalance5Year" style="color: var(--emerald); text-shadow: 0 0 25px rgba(16,185,129,0.3);">0</div>
                 </div>
             </div>
 
@@ -770,6 +765,10 @@
                     <div class="detail-item">
                         <h4>إيراد الإيجار المتوقع</h4>
                         <p id="breakdownRentIncome">0</p>
+                    </div>
+                    <div class="detail-item" style="grid-column: 1 / -1; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-glass);">
+                        <h4 style="color: var(--emerald);">الرصيد الكلي مع الأرباح والأصول المستثمرة خلال 5 سنوات</h4>
+                        <p id="totalBalance5Year" style="color: var(--emerald); text-shadow: 0 0 10px rgba(16,185,129,0.2);">0</p>
                     </div>
                 </div>
             </div>
@@ -862,10 +861,10 @@
 
             // --- Update UI ---
             updateResult('finalUnitPrice', finalUnitPrice);
-            updateResult('clientCapital', clientCapital);
             updateResult('totalCapitalAmount', totalCapitalAmount);
             updateResult('capitalGain', capitalGain);
             updateResult('amountToPay', amountToPay);
+            updateResult('loanAmountDisplay', LOAN_AMOUNT);
 
             const loanSurplusEl = document.getElementById('loanSurplus');
             loanSurplusEl.textContent = formatNumber(loanSurplus);
@@ -926,7 +925,7 @@
                 propertyPrice: 'سعر الوحدة السكنية',
                 amount: 'قيمة العقار الحالي',
                 addedAmount: 'المبلغ المضاف',
-                monthlyRent: 'الإيجار الشهري المتوقع'
+                monthlyRent: 'الإيجار الشهري المتوقع للوحدة السكنية'
             };
 
             const fields = [];
@@ -937,17 +936,16 @@
 
             const numbers = [
                 { label: 'قيمة الوحدة السكنية', value: document.getElementById('finalUnitPrice')?.textContent || '0' },
-                { label: 'قيمة العقار الحالي', value: document.getElementById('clientCapital')?.textContent || '0' },
                 { label: 'المبلغ الكلي (قيمة العقار + المبلغ المدفوع)', value: document.getElementById('totalCapitalAmount')?.textContent || '0' },
                 { label: 'المبلغ المتبقي على الوحدة السكنية', value: document.getElementById('capitalGain')?.textContent || '0' },
                 { label: 'المطلوب تسديده للوحدة السكنية', value: document.getElementById('amountToPay')?.textContent || '0' },
+                { label: 'مقدار القرض', value: document.getElementById('loanAmountDisplay')?.textContent || '0' },
                 { label: 'فائض القرض', value: document.getElementById('loanSurplus')?.textContent || '0' },
                 { label: 'العائد الاستثماري السنوي من فائض القرض', value: document.getElementById('annualInvestmentProfit')?.textContent || '0' },
                 { label: 'إيراد الإيجار السنوي المتوقع للوحدة السكنية', value: document.getElementById('annualRentIncome')?.textContent || '0' },
                 { label: 'إجمالي الأرباح السنوية', value: document.getElementById('totalAnnualIncome')?.textContent || '0' },
-                { label: 'صافي الأرباح السنوي (بعد الخصم)', value: document.getElementById('netAnnualProfit')?.textContent || '0' },
-                { label: 'إجمالي الأرباح المتوقعة (لمدة 5 سنوات)', value: document.getElementById('totalProfit5Year')?.textContent || '0' },
-                { label: 'الرصيد الكلي مع الارباح والاصول المستثمر بها (5 سنوات)', value: document.getElementById('totalBalance5Year')?.textContent || '0' }
+                { label: 'صافي الأرباح السنوي (بعد خصم القسط الشهري 600,000 د.ع)', value: document.getElementById('netAnnualProfit')?.textContent || '0' },
+                { label: 'إجمالي الأرباح المتوقعة (لمدة 5 سنوات)', value: document.getElementById('totalProfit5Year')?.textContent || '0' }
             ];
 
             const container = document.createElement('div');
@@ -964,12 +962,9 @@
 
             const header = document.createElement('div');
             header.innerHTML = `
-                <div style="text-align:center; margin-bottom:10px;">
-                    <h2 style="margin:0; color: #d4af37;">شركة المستشار المؤسسي</h2>
-                    <div style="color:#666; font-size:0.9rem; margin-top:4px;">📍 كربلاء - حي المعلمين بجانب مركز الشرطة</div>
-                    <div style="color:#666; font-size:0.85rem; margin-top:3px;">🌐 karbalaholding.com</div>
-                    <div style="color:#666; font-size:0.85rem; margin-top:3px;">📞 07760012200 | 07860012200</div>
-                    <div style="color:#333; font-size:0.95rem; margin-top:10px; font-weight:800;">التقرير الرسمي للاستثمار العقاري (5 سنوات)</div>
+                <div style="text-align:center; margin-bottom:15px;">
+                    <h2 style="margin:0; color: #d4af37; font-size: 1.6rem; font-weight: 800;">التقرير الاستشاري للاستبدال والاستثمار العقاري</h2>
+                    <div style="color:#333; font-size:1.2rem; margin-top:8px; font-weight:800;">من شركة المستشار المؤسسي إلى السيد/ة ${customerName}</div>
                     <div style="color:#666; font-size:0.85rem; margin-top:6px;">تاريخ التقرير: ${dateStr}</div>
                 </div>
                 <hr style="border:none; border-top:2px solid #d4af37; margin:12px 0;">
@@ -1020,25 +1015,37 @@
             detailsTable.style.width = '100%';
             detailsTable.style.borderCollapse = 'collapse';
             const keys = [
-                { k: 'breakdownAppreciation', l: 'صعود العقار (متوقع)' },
+                { k: 'breakdownAppreciation', l: 'صعود العقار المتوقع' },
                 { k: 'breakdownInvestmentProfit', l: 'العائد الاستثماري السنوي من فائض القرض' },
-                { k: 'breakdownRentIncome', l: 'إيراد الإيجار المتوقع' }
+                { k: 'breakdownRentIncome', l: 'إيراد الإيجار المتوقع' },
+                { k: 'totalBalance5Year', l: 'الرصيد الكلي مع الأرباح والأصول المستثمرة خلال 5 سنوات' }
             ];
-            keys.forEach(item => {
+            keys.forEach((item, index) => {
                 const val = document.getElementById(item.k)?.textContent || '0';
                 const row = document.createElement('tr');
-                row.innerHTML = `<td style="width:55%; padding:8px; color:#555;">${item.l}</td><td style="padding:8px; font-weight:800; text-align:left;">${val}</td>`;
+                if (index === keys.length - 1) {
+                    row.innerHTML = `<td style="width:55%; padding:12px 8px; color:#10b981; font-weight:800; border-top:1px solid #eee;">${item.l}</td><td style="padding:12px 8px; font-weight:800; text-align:left; color:#10b981; border-top:1px solid #eee;">${val}</td>`;
+                } else {
+                    row.innerHTML = `<td style="width:55%; padding:8px; color:#555;">${item.l}</td><td style="padding:8px; font-weight:800; text-align:left;">${val}</td>`;
+                }
                 detailsTable.appendChild(row);
             });
             breakdown.appendChild(detailsTable);
             container.appendChild(breakdown);
 
             const footer = document.createElement('div');
-            footer.style.marginTop = '20px';
+            footer.style.marginTop = '30px';
+            footer.style.paddingTop = '15px';
+            footer.style.borderTop = '1px solid #d4af37';
             footer.style.textAlign = 'center';
             footer.innerHTML = `
-                <div style="font-weight: 800; color: #d4af37; font-size: 1.1rem; margin-bottom: 10px;">قسم البحث والتطوير: جعفر الركابي</div>
-                <p style="font-size: 0.8rem; color: #777;">جميع الحقوق محفوظة لشركة المستشار المؤسسي © 2026</p>
+                <div style="font-weight: 800; color: #333; font-size: 1rem; margin-bottom: 10px;">معلومات التواصل:</div>
+                <div style="color:#666; font-size:0.9rem; margin-bottom:4px;">🌐 الموقع الإلكتروني: karbalaholding.com</div>
+                <div style="color:#666; font-size:0.9rem; margin-bottom:4px;">📍 موقع الشركة: كربلاء - حي المعلمين بجانب مركز الشرطة</div>
+                <div style="color:#666; font-size:0.9rem; margin-bottom:4px;">📍 مكان الشركة: كربلاء - حي المعلمين بجانب مركز الشرطة</div>
+                <div style="color:#666; font-size:0.9rem; margin-bottom:10px;">🏗️ مشروع المجد السكني: https://www.facebook.com/share/p/1Bhw8e8oiX/?mibextid=wwXIfr</div>
+                <div style="font-weight: 800; color: #d4af37; font-size: 1.1rem; margin-bottom: 5px;">قسم البحث والتطوير: جعفر الركابي</div>
+                <p style="font-size: 0.8rem; color: #777; margin:0;">جميع الحقوق محفوظة لشركة المستشار المؤسسي © 2026</p>
             `;
             container.appendChild(footer);
 
@@ -1058,10 +1065,10 @@
             const monthlyRent = document.getElementById('monthlyRent')?.value || '0';
 
             const finalUnitPrice = document.getElementById('finalUnitPrice')?.textContent || '0';
-            const clientCapital = document.getElementById('clientCapital')?.textContent || '0';
             const totalCapitalAmount = document.getElementById('totalCapitalAmount')?.textContent || '0';
             const capitalGain = document.getElementById('capitalGain')?.textContent || '0';
             const amountToPay = document.getElementById('amountToPay')?.textContent || '0';
+            const loanAmountDisplay = document.getElementById('loanAmountDisplay')?.textContent || '0';
             const loanSurplus = document.getElementById('loanSurplus')?.textContent || '0';
             const annualInvestmentProfit = document.getElementById('annualInvestmentProfit')?.textContent || '0';
             const annualRentIncome = document.getElementById('annualRentIncome')?.textContent || '0';
@@ -1075,12 +1082,8 @@
             const breakdownRentIncome = document.getElementById('breakdownRentIncome')?.textContent || '0';
 
             const text = `
-📄 *التقرير الرسمي للاستثمار العقاري*
-🏛️ شركة المستشار المؤسسي
-📍 كربلاء - حي المعلمين بجانب مركز الشرطة
-🌐 https://karbalaholding.com/
-📞 07760012200 | 07860012200
-🏗️ مشروع المجد السكني: https://www.facebook.com/share/p/1Bhw8e8oiX/?mibextid=wwXIfr
+📄 *التقرير الاستشاري للاستبدال والاستثمار العقاري*
+من شركة المستشار المؤسسي إلى السيد/ة ${customerName}
 📅 تاريخ التقرير: ${now}
 ━━━━━━━━━━━━━━━━━━━━━
 👤 *بيانات العميل:*
@@ -1088,36 +1091,39 @@
 • العنوان: ${customerAddress}
 • رقم الهاتف: ${customerPhone}
 ━━━━━━━━━━━━━━━━━━━━━
-🔹 *ملخص النتائج المباشرة:*
-🏷️ **قيمة الوحدة السكنية:** ${finalUnitPrice} د.ع
-💵 **المبلغ المتبقي على الوحدة السكنية:** ${capitalGain} د.ع
-💵 **المبلغ المطلوب تسديده للوحدة السكنية:** ${amountToPay} د.ع
-━━━━━━━━━━━━━━━━━━━━━
 📋 *البيانات المدخلة:*
 • سعر الوحدة السكنية: ${propertyPrice} د.ع
 • قيمة العقار الحالي: ${amount} د.ع
 • المبلغ المضاف: ${addedAmount} د.ع
-• الإيجار الشهري المتوقع: ${monthlyRent} د.ع
+• الإيجار الشهري المتوقع للوحدة السكنية: ${monthlyRent} د.ع
 ━━━━━━━━━━━━━━━━━━━━━
 📊 *التفاصيل المالية:*
-• قيمة العقار الحالي: ${clientCapital} د.ع
+• قيمة الوحدة السكنية: ${finalUnitPrice} د.ع
 • المبلغ الكلي (قيمة العقار + المبلغ المدفوع): ${totalCapitalAmount} د.ع
+• المبلغ المتبقي على الوحدة السكنية: ${capitalGain} د.ع
+• المطلوب تسديده للوحدة السكنية: ${amountToPay} د.ع
+• مقدار القرض: ${loanAmountDisplay} د.ع
 • فائض القرض: ${loanSurplus} د.ع
 • العائد الاستثماري السنوي من فائض القرض: ${annualInvestmentProfit} د.ع
 • إيراد الإيجار السنوي المتوقع للوحدة السكنية: ${annualRentIncome} د.ع
 • إجمالي الأرباح السنوية: ${totalAnnualIncome} د.ع
-• صافي الأرباح السنوي (بعد الخصم): ${netAnnualProfit} د.ع
+• صافي الأرباح السنوي المتوقع (بعد خصم القسط الشهري 600,000 د.ع): ${netAnnualProfit} د.ع
 ━━━━━━━━━━━━━━━━━━━━━
 💎 *إجمالي الأرباح المتوقعة (لمدة 5 سنوات):*
 **${totalProfit5Year} د.ع**
-
-💰 *الرصيد الكلي مع الارباح والاصول المستثمر بها خلال 5 سنوات:*
-**${totalBalance5Year} د.ع**
 
 📌 *تفاصيل مصادر الربح (5 سنوات):*
 • صعود العقار المتوقع: ${breakdownAppreciation} د.ع
 • العائد الاستثماري السنوي من فائض القرض: ${breakdownInvestmentProfit} د.ع
 • إيراد الإيجار المتوقع: ${breakdownRentIncome} د.ع
+• الرصيد الكلي مع الأرباح والأصول المستثمرة خلال 5 سنوات: ${totalBalance5Year} د.ع
+━━━━━━━━━━━━━━━━━━━━━
+📞 *معلومات التواصل:*
+• الموقع الإلكتروني: karbalaholding.com
+• موقع الشركة: كربلاء - حي المعلمين بجانب مركز الشرطة
+• مكان الشركة: كربلاء - حي المعلمين بجانب مركز الشرطة
+• مشروع المجد السكني: https://www.facebook.com/share/p/1Bhw8e8oiX/?mibextid=wwXIfr
+• هواتف الشركة: 07760012200 | 07860012200
 ━━━━━━━━━━━━━━━━━━━━━
 🌟 *قسم البحث والتطوير: جعفر الركابي*
             `.trim();
