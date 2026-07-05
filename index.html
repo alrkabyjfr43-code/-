@@ -8,67 +8,45 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <!-- jsPDF Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <style>
         :root {
-            /* Light Theme Variables */
-            --primary-hue: 220;
-            --primary: hsl(var(--primary-hue), 90%, 56%);
-            --primary-dark: hsl(var(--primary-hue), 90%, 40%);
-            --secondary: hsl(45, 90%, 50%);
-            --accent: hsl(150, 80%, 40%);
-            --danger: hsl(0, 80%, 60%);
-
-            --bg-body: #f0f4f8;
-            --bg-glass: rgba(255, 255, 255, 0.85);
-            --bg-card: rgba(255, 255, 255, 0.6);
-            --text-main: #1f2937;
-            --text-muted: #6b7280;
-            --border-color: rgba(255, 255, 255, 0.5);
-
-            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
-            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
-
-            --glass-border: 1px solid rgba(255, 255, 255, 0.4);
-            --radius-lg: 24px;
-            --radius-md: 16px;
-            --radius-sm: 12px;
-        }
-
-        [data-theme="dark"] {
-            /* Dark Theme Variables */
-            --primary: hsl(var(--primary-hue), 80%, 60%);
-            --primary-dark: hsl(var(--primary-hue), 80%, 70%);
-            --bg-body: #0f172a;
-            --bg-glass: rgba(15, 23, 42, 0.75);
-            --bg-card: rgba(30, 41, 59, 0.6);
-            --text-main: #f1f5f9;
+            /* Premium Legendary Theme Variables */
+            --bg-body-1: #0a0c12;
+            --bg-body-2: #161a25;
+            --bg-glass: rgba(26, 32, 44, 0.85);
+            --bg-card: rgba(35, 43, 59, 0.6);
+            --bg-input: rgba(15, 18, 25, 0.8);
+            
+            --gold-primary: #d4af37;
+            --gold-light: #fbeea4;
+            --emerald: #10b981;
+            --danger: #ef4444;
+            
+            --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --border-color: rgba(255, 255, 255, 0.1);
-            --glass-border: 1px solid rgba(255, 255, 255, 0.08);
-            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            --border-glass: rgba(212, 175, 55, 0.15);
+            --border-focus: rgba(212, 175, 55, 0.5);
+            
+            --shadow-glow: 0 0 20px rgba(212, 175, 55, 0.15);
+            --shadow-red: 0 0 15px rgba(239, 68, 68, 0.6);
+            --radius-lg: 20px;
+            --radius-md: 12px;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         body {
             font-family: 'Tajawal', sans-serif;
-            background: var(--bg-body);
-            background-image:
-                radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(245, 158, 11, 0.08) 0%, transparent 40%);
+            background: linear-gradient(135deg, var(--bg-body-1) 0%, var(--bg-body-2) 100%);
             min-height: 100vh;
             color: var(--text-main);
             display: flex;
@@ -77,40 +55,56 @@
             line-height: 1.6;
         }
 
-        /* Glassmorphism Container */
+        /* Ambient Glow */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -20%;
+            left: -10%;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, rgba(212,175,55,0.04) 0%, transparent 60%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
         .app-container {
             width: 100%;
             max-width: 1100px;
             background: var(--bg-glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: var(--glass-border);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--border-glass);
             border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-lg);
+            box-shadow: var(--shadow-glow), inset 0 1px 0 rgba(255,255,255,0.05);
             padding: 3rem;
             position: relative;
+            z-index: 1;
             overflow: hidden;
         }
 
-        /* Decorative Elements */
-        .app-container::before {
-            content: '';
+        .dev-badge {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 6px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            top: 25px;
+            left: -35px;
+            background: linear-gradient(135deg, var(--gold-primary), #a38421);
+            color: #000;
+            padding: 8px 45px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            transform: rotate(-45deg);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            z-index: 10;
+            letter-spacing: 0.5px;
         }
 
-        /* Header */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 3rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-glass);
         }
 
         .brand {
@@ -120,13 +114,14 @@
         }
 
         .logo-box {
-            width: 70px;
-            height: 70px;
-            border-radius: var(--radius-sm);
+            width: 85px;
+            height: 85px;
+            border-radius: var(--radius-md);
             overflow: hidden;
-            box-shadow: var(--shadow-md);
-            background: white;
-            padding: 5px;
+            border: 2px solid var(--gold-primary);
+            box-shadow: 0 0 20px rgba(212,175,55,0.25);
+            background: #fff;
+            padding: 4px;
         }
 
         .logo-box img {
@@ -136,49 +131,28 @@
         }
 
         .brand-text h1 {
-            font-size: 1.8rem;
+            font-size: 2.2rem;
             font-weight: 800;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--gold-light), var(--gold-primary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 0.2rem;
+            margin-bottom: 0.3rem;
         }
 
         .brand-text p {
             color: var(--text-muted);
             font-size: 0.95rem;
+            margin-bottom: 0.2rem;
         }
 
-        /* Dark Mode Toggle */
-        .theme-toggle {
-            background: var(--bg-card);
-            border: var(--glass-border);
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: var(--text-main);
-            font-size: 1.2rem;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .theme-toggle:hover {
-            transform: scale(1.05);
-            background: var(--bg-body);
-        }
-
-        /* Form Section */
         .section-title {
-            font-size: 1.25rem;
+            font-size: 1.35rem;
+            color: var(--gold-primary);
             margin-bottom: 1.5rem;
-            color: var(--primary);
+            font-weight: 800;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            font-weight: 700;
+            gap: 0.6rem;
         }
 
         .form-grid {
@@ -188,16 +162,12 @@
             margin-bottom: 3rem;
         }
 
-        .input-group {
-            position: relative;
-        }
-
         .input-group label {
             display: block;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: var(--text-muted);
             margin-bottom: 0.5rem;
-            font-weight: 500;
+            font-weight: 700;
         }
 
         .input-wrapper {
@@ -207,21 +177,31 @@
         .input-wrapper input {
             width: 100%;
             padding: 1rem 1rem 1rem 3rem;
-            /* Space for icon if needed, or currency */
-            background: var(--bg-card);
-            border: var(--glass-border);
+            background: var(--bg-input);
+            border: 1px solid var(--border-glass);
             border-radius: var(--radius-md);
             color: var(--text-main);
-            font-family: inherit;
-            font-size: 1rem;
-            font-weight: 600;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+            font-family: 'Outfit', 'Tajawal', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
         }
 
         .input-wrapper input:focus {
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+            border-color: var(--gold-primary);
+            box-shadow: var(--shadow-glow);
+        }
+
+        /* Red Glow for Invalid Phone */
+        .input-group.invalid .input-wrapper input {
+            border-color: var(--danger);
+            box-shadow: var(--shadow-red);
+        }
+
+        .input-group.invalid .helper-text {
+            color: var(--danger);
+            font-weight: 700;
+            opacity: 1;
         }
 
         .currency-symbol {
@@ -229,100 +209,98 @@
             left: 1rem;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            pointer-events: none;
+            color: var(--gold-primary);
+            font-size: 0.9rem;
+            font-weight: 800;
         }
 
         .helper-text {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
-            margin-top: 0.4rem;
+            margin-top: 0.5rem;
             opacity: 0.8;
         }
 
-        /* Buttons */
         .action-bar {
             display: flex;
             gap: 1rem;
             justify-content: flex-end;
             margin-top: 2rem;
             padding-top: 2rem;
-            border-top: 1px solid var(--border-color);
+            border-top: 1px solid var(--border-glass);
         }
 
         .btn {
             padding: 1rem 2.5rem;
             border-radius: var(--radius-md);
-            font-weight: 700;
+            font-weight: 800;
+            font-size: 1.05rem;
             cursor: pointer;
             font-family: inherit;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
+            gap: 0.6rem;
+            border: 1px solid transparent;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary), hsl(var(--primary-hue), 80%, 45%));
-            color: white;
-            border: none;
-            box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.4);
+            background: linear-gradient(135deg, var(--gold-primary), #a68420);
+            color: #0a0c12;
+            box-shadow: var(--shadow-glow);
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 30px -5px rgba(59, 130, 246, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(212,175,55,0.4);
         }
 
         .btn-outline {
-            background: transparent;
-            border: 2px solid var(--border-color);
-            color: var(--text-muted);
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            color: var(--gold-primary);
         }
 
         .btn-outline:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-            background: rgba(59, 130, 246, 0.05);
+            border-color: var(--gold-primary);
+            background: rgba(212,175,55,0.05);
+            transform: translateY(-2px);
         }
 
-        /* Results Section */
         .results-container {
             margin-top: 3rem;
             display: none;
-            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         .results-container.show {
             display: block;
         }
 
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .results-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 1.5rem;
         }
 
         .result-card {
             background: var(--bg-card);
-            padding: 1.5rem;
+            padding: 1.8rem 1.5rem;
             border-radius: var(--radius-md);
-            border: var(--glass-border);
+            border: 1px solid var(--border-glass);
             position: relative;
             overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .result-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold-primary);
+            box-shadow: var(--shadow-glow);
         }
 
         .result-card::after {
@@ -330,54 +308,64 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 4px;
+            width: 3px;
             height: 100%;
-            background: var(--primary);
+            background: var(--gold-primary);
             opacity: 0.5;
         }
 
         .result-card.highlight {
-            background: rgba(16, 185, 129, 0.1);
+            background: linear-gradient(145deg, rgba(35, 43, 59, 0.8), rgba(212,175,55,0.06));
+            border-color: rgba(212,175,55,0.4);
+        }
+        .result-card.highlight::after {
+            width: 4px;
+            opacity: 1;
         }
 
-        .result-card.highlight::after {
-            background: var(--accent);
-            opacity: 1;
+        .result-card.supreme {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, rgba(212,175,55,0.1), rgba(16,185,129,0.05));
+            border: 2px solid var(--gold-primary);
+            text-align: center;
+        }
+        .result-card.supreme .result-value {
+            font-size: 3.2rem;
+            color: var(--gold-primary);
+            text-shadow: 0 0 25px rgba(212,175,55,0.25);
         }
 
         .result-card.warning {
-            background: rgba(245, 158, 11, 0.1);
+            background: rgba(239, 68, 68, 0.05);
+            border-color: rgba(239, 68, 68, 0.3);
         }
-
         .result-card.warning::after {
-            background: var(--secondary);
-            opacity: 1;
+            background: var(--danger);
+            opacity: 0.8;
         }
 
         .result-label {
-            font-size: 0.85rem;
+            font-size: 0.95rem;
             color: var(--text-muted);
-            margin-bottom: 0.5rem;
-            font-weight: 600;
+            margin-bottom: 0.6rem;
+            font-weight: 700;
         }
 
         .result-value {
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             font-weight: 800;
             color: var(--text-main);
             font-family: 'Outfit', sans-serif;
             letter-spacing: -0.5px;
         }
 
-
-
-        /* Detail Box */
         .details-box {
             background: var(--bg-card);
             border-radius: var(--radius-md);
             padding: 2rem;
             margin-top: 2rem;
-            border: 1px dashed var(--border-color);
+            border: 1px solid var(--border-focus);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
         }
 
         .details-grid {
@@ -388,59 +376,201 @@
         }
 
         .detail-item h4 {
-            font-size: 0.8rem;
+            font-size: 0.95rem;
             color: var(--text-muted);
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
         }
 
         .detail-item p {
             font-family: 'Outfit', sans-serif;
-            font-weight: 700;
-            color: var(--text-main);
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: var(--gold-light);
+            text-shadow: 0 0 10px rgba(245, 223, 139, 0.2);
         }
 
-        /* Footer */
         .footer {
             margin-top: 4rem;
             text-align: center;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            opacity: 0.7;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-glass);
         }
 
-        /* Mobile Responsive */
+        .dev-name {
+            color: var(--gold-primary);
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            margin-top: 10px;
+            padding: 5px 15px;
+            border: 1px solid var(--gold-primary);
+            border-radius: 50px;
+            background: rgba(212,175,55,0.05);
+        }
+
         @media (max-width: 768px) {
-            body {
-                padding: 1rem;
+            body { 
+                padding: 0; 
+                background: var(--bg-body-1);
             }
-
-            .app-container {
-                padding: 1.5rem;
+            .app-container { 
+                padding: 1.5rem 1rem; 
+                border-radius: 0; 
+                border: none;
+                box-shadow: none;
+                min-height: 100vh;
             }
-
-            .header {
+            .header { 
+                flex-direction: column; 
+                text-align: center; 
+                gap: 1rem; 
+                border-bottom: none;
+                margin-bottom: 1.5rem;
+                padding-bottom: 0;
+            }
+            .brand { 
+                flex-direction: column; 
+                gap: 0.8rem;
+            }
+            .logo-box {
+                width: 75px; height: 75px;
+                margin: 0 auto;
+                box-shadow: 0 0 30px rgba(212,175,55,0.3);
+            }
+            .brand-text h1 {
+                font-size: 1.6rem;
+            }
+            .brand-text p {
+                font-size: 0.85rem;
+            }
+            /* Hide the long text on mobile to save space */
+            .brand-text p:nth-child(3),
+            .brand-text p:nth-child(4),
+            .brand-text p:nth-child(5),
+            .brand-text p:nth-child(6) {
+                display: none;
+            }
+            
+            .section-title {
+                font-size: 1.2rem;
+                margin-bottom: 1.2rem;
+                justify-content: center;
+                background: linear-gradient(90deg, transparent, rgba(212,175,55,0.1), transparent);
+                padding: 10px 0;
+                border-radius: 8px;
+            }
+            .form-grid {
+                gap: 1.2rem;
+                margin-bottom: 2rem;
+                display: flex;
                 flex-direction: column;
-                text-align: center;
-                gap: 1rem;
             }
-
-            .brand {
-                flex-direction: column;
+            .input-wrapper input {
+                padding: 1.2rem 1.2rem 1.2rem 3rem;
+                font-size: 1.1rem;
+                background: rgba(15, 18, 25, 0.95);
+                border: 1px solid rgba(212,175,55,0.3);
+                border-radius: 16px;
+                box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
             }
-
-            .action-bar {
-                flex-direction: column;
+            .currency-symbol {
+                font-size: 1rem;
             }
-
-            .btn {
-                width: 100%;
+            .helper-text {
+                font-size: 0.8rem;
+                text-align: right;
+                padding-right: 5px;
+            }
+            
+            .action-bar { 
+                flex-direction: row; 
+                gap: 0.8rem;
+                margin-top: 1rem;
+                padding-top: 1.5rem;
+                border-top: 1px solid rgba(255,255,255,0.05);
+            }
+            .btn { 
+                padding: 1.2rem 1rem;
+                font-size: 1.05rem;
+                border-radius: 16px;
                 justify-content: center;
             }
-
-            .theme-toggle {
-                position: absolute;
-                top: 1.5rem;
-                left: 1.5rem;
+            .btn-primary {
+                flex: 2;
+                box-shadow: 0 10px 25px rgba(212,175,55,0.3);
+            }
+            .btn-outline {
+                flex: 1;
+            }
+            
+            .results-container {
+                margin-top: 2rem;
+            }
+            .results-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .result-card {
+                padding: 1.5rem 1.2rem;
+                border-radius: 16px;
+                text-align: center;
+                background: linear-gradient(145deg, rgba(35, 43, 59, 0.8), rgba(20, 25, 35, 0.9));
+            }
+            .result-card::after {
+                width: 100%;
+                height: 4px;
+                top: 0;
+                left: 0;
+            }
+            .result-card.highlight::after {
+                height: 4px;
+                width: 100%;
+            }
+            .result-label {
+                font-size: 0.9rem;
+                margin-bottom: 0.8rem;
+            }
+            .result-value {
+                font-size: 1.6rem;
+            }
+            .result-card.supreme {
+                padding: 2rem 1rem;
+                border-radius: 20px;
+            }
+            .result-card.supreme .result-value {
+                font-size: 2.2rem;
+            }
+            
+            .details-box {
+                padding: 1.5rem 1rem;
+                border-radius: 16px;
+            }
+            .details-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 1.2rem;
+                text-align: center;
+            }
+            
+            .dev-badge { 
+                display: block;
+                position: relative;
+                top: 0;
+                left: 0;
+                transform: none;
+                width: fit-content;
+                margin: 0 auto 1.5rem auto;
+                border-radius: 50px;
+                font-size: 0.8rem;
+                padding: 6px 20px;
+            }
+            
+            .footer {
+                margin-top: 3rem;
+                padding-bottom: 2rem;
             }
         }
     </style>
@@ -449,6 +579,9 @@
 <body>
 
     <div class="app-container">
+        <!-- Developer Badge -->
+        <div class="dev-badge">قسم البحث والتطوير: جعفر الركابي</div>
+
         <!-- Header -->
         <header class="header">
             <div class="brand">
@@ -458,32 +591,25 @@
                 <div class="brand-text">
                     <h1>شركة المستشار المؤسسي</h1>
                     <p>حاسبة الاستثمار العقاري المتقدمة</p>
-                    <p style="font-size: 0.85rem; margin-top: 0.3rem;">📍 كربلاء - حي المعلمين بجانب مركز الشرطة</p>
-                    <p style="font-size: 0.85rem; margin-top: 0.2rem;">🌐 <a href="https://karbalaholding.com/"
-                            target="_blank" style="color: var(--primary); text-decoration: none;">karbalaholding.com</a>
-                    </p>
+                    <p style="font-size: 0.85rem; margin-top: 0.4rem;">📍 كربلاء - حي المعلمين بجانب مركز الشرطة</p>
+                    <p style="font-size: 0.85rem; margin-top: 0.2rem;">🌐 <a href="https://karbalaholding.com/" target="_blank" style="color: var(--gold-primary); text-decoration: none;">karbalaholding.com</a></p>
                     <p style="font-size: 0.85rem; margin-top: 0.2rem;">📞 07760012200 | 07860012200</p>
-                    <p style="font-size: 0.85rem; margin-top: 0.2rem;">🏗️ <a
-                            href="https://www.facebook.com/share/p/1Bhw8e8oiX/?mibextid=wwXIfr" target="_blank"
-                            style="color: var(--primary); text-decoration: none;">مشروع المجد السكني</a></p>
+                    <p style="font-size: 0.85rem; margin-top: 0.2rem;">🏗️ <a href="https://www.facebook.com/share/p/1Bhw8e8oiX/?mibextid=wwXIfr" target="_blank" style="color: var(--gold-primary); text-decoration: none;">مشروع المجد السكني</a></p>
                 </div>
             </div>
-            <button class="theme-toggle" id="themeToggle" aria-label="Toggle Dark Mode">
-                <span id="themeIcon">🌙</span>
-            </button>
         </header>
 
         <!-- Input Form -->
         <form id="investmentForm" onsubmit="return false;">
             <div class="section-title">
-                <span>�</span> بيانات العميل
+                <span>👤</span> بيانات العميل
             </div>
 
             <div class="form-grid">
                 <div class="input-group">
                     <label for="customerName">اسم الزبون</label>
                     <div class="input-wrapper">
-                        <span class="currency-symbol">👤</span>
+                        <span class="currency-symbol">✍️</span>
                         <input type="text" id="customerName" placeholder="أدخل اسم الزبون">
                     </div>
                     <div class="helper-text">الاسم الكامل للعميل</div>
@@ -498,13 +624,13 @@
                     <div class="helper-text">عنوان سكن العميل</div>
                 </div>
 
-                <div class="input-group">
+                <div class="input-group" id="phoneGroup">
                     <label for="customerPhone">رقم هاتف الزبون</label>
                     <div class="input-wrapper">
                         <span class="currency-symbol">📱</span>
-                        <input type="text" id="customerPhone" placeholder="07XXXXXXXXX" inputmode="tel">
+                        <input type="text" id="customerPhone" placeholder="07XXXXXXXXX" inputmode="numeric">
                     </div>
-                    <div class="helper-text">رقم الهاتف للتواصل</div>
+                    <div class="helper-text" id="phoneHelperText">يجب إدخال 11 رقماً بالضبط</div>
                 </div>
             </div>
 
@@ -514,12 +640,21 @@
 
             <div class="form-grid">
                 <div class="input-group">
-                    <label for="propertyPrice">سعر الوحدة الأساسي</label>
+                    <label for="propertyPrice">سعر الوحدة السكنية</label>
                     <div class="input-wrapper">
                         <span class="currency-symbol">د.ع</span>
                         <input type="text" id="propertyPrice" value="130,000,000" inputmode="numeric">
                     </div>
-                    <div class="helper-text">السعر الأساسي للوحدة العقارية - الافتراضي: 130 مليون</div>
+                    <div class="helper-text">السعر الأساسي للوحدة العقارية</div>
+                </div>
+
+                <div class="input-group">
+                    <label for="amount">قيمة العقار الحالي</label>
+                    <div class="input-wrapper">
+                        <span class="currency-symbol">د.ع</span>
+                        <input type="text" id="amount" value="100,000,000" inputmode="numeric">
+                    </div>
+                    <div class="helper-text">قيمة العقار الحالية أو رأس المال المدفوع</div>
                 </div>
 
                 <div class="input-group">
@@ -528,62 +663,16 @@
                         <span class="currency-symbol">د.ع</span>
                         <input type="text" id="addedAmount" placeholder="0" inputmode="numeric">
                     </div>
-                    <div class="helper-text">المبلغ الجديد الذي تضيفه إلى استثمارك في الوحدة العقارية</div>
-                </div>
-
-                <div class="input-group">
-                    <label for="discount">الخصم على سعر الوحدة</label>
-                    <div class="input-wrapper">
-                        <span class="currency-symbol">د.ع</span>
-                        <input type="text" id="discount" placeholder="0" inputmode="numeric">
-                    </div>
-                    <div class="helper-text">المبلغ المخصوم من السعر الأساسي للوحدة العقارية</div>
-                </div>
-
-                <div class="input-group">
-                    <label for="previousAmount">المبلغ السابق لدى الشركة</label>
-                    <div class="input-wrapper">
-                        <span class="currency-symbol">د.ع</span>
-                        <input type="text" id="previousAmount" placeholder="0" inputmode="numeric">
-                    </div>
-                    <div class="helper-text">الرصيد الذي تمتلكه لدى الشركة من فترة سابقة</div>
-                </div>
-
-                <div class="input-group">
-                    <label for="existingProfits">الأرباح المستحقة</label>
-                    <div class="input-wrapper">
-                        <span class="currency-symbol">د.ع</span>
-                        <input type="text" id="existingProfits" placeholder="0" inputmode="numeric">
-                    </div>
-                    <div class="helper-text">الأرباح المتراكمة المستحقة لك من الاستثمارات السابقة</div>
-                </div>
-
-                <div class="input-group">
-                    <label for="propertyValuation">تقييم العقار</label>
-                    <div class="input-wrapper">
-                        <span class="currency-symbol">د.ع</span>
-                        <input type="text" id="propertyValuation" placeholder="0" inputmode="numeric">
-                    </div>
-                    <div class="helper-text">القيمة الحالية للعقار حسب التقييم المهني (تُحسب ضمن رأس المال)</div>
+                    <div class="helper-text">مبلغ إضافي يُجمع مع قيمة العقار الحالي</div>
                 </div>
 
                 <div class="input-group">
                     <label for="monthlyRent">الإيجار الشهري المتوقع</label>
                     <div class="input-wrapper">
                         <span class="currency-symbol">د.ع</span>
-                        <input type="text" id="monthlyRent" placeholder="0" inputmode="numeric">
+                        <input type="text" id="monthlyRent" value="350,000" inputmode="numeric">
                     </div>
                     <div class="helper-text">الدخل الشهري المتوقع من إيجار العقار</div>
-                </div>
-
-                <div class="input-group">
-                    <label for="monthlyInstallment">القسط الشهري (عرض فقط)</label>
-                    <div class="input-wrapper">
-                        <span class="currency-symbol">د.ع</span>
-                        <input type="text" id="monthlyInstallment" placeholder="0" inputmode="numeric">
-                    </div>
-                    <div class="helper-text">مبلغ الدفع الشهري حسب قدرة الزبون — للعرض فقط ولا يدخل في أي عملية حسابية
-                    </div>
                 </div>
             </div>
 
@@ -604,83 +693,83 @@
             </div>
 
             <div class="results-grid">
-                <div class="result-card highlight" id="discountCard">
-                    <div class="result-label">مبلغ الخصم (من الشركة)</div>
-                    <div class="result-value" id="discountAmountDisplay">0</div>
-                </div>
-
                 <div class="result-card">
-                    <div class="result-label">1. السعر النهائي للوحدة</div>
+                    <div class="result-label">قيمة الوحدة السكنية</div>
                     <div class="result-value" id="finalUnitPrice">0</div>
                 </div>
 
                 <div class="result-card">
-                    <div class="result-label">2. إجمالي رأس المال</div>
+                    <div class="result-label">قيمة العقار الحالي</div>
                     <div class="result-value" id="clientCapital">0</div>
                 </div>
 
+                <div class="result-card highlight">
+                    <div class="result-label">المبلغ الكلي <br><small style="font-size:0.75rem; font-weight:normal; opacity:0.8;">(قيمة العقار + المبلغ المدفوع)</small></div>
+                    <div class="result-value" id="totalCapitalAmount">0</div>
+                </div>
+
+                <div class="result-card highlight">
+                    <div class="result-label">المبلغ المتبقي على الوحدة السكنية</div>
+                    <div class="result-value" id="capitalGain">0</div>
+                </div>
+
                 <div class="result-card">
-                    <div class="result-label">3. المطلوب تسديده</div>
-                    <div class="result-value">
-                        <span id="amountToPay">0</span>
-                    </div>
+                    <div class="result-label">المطلوب تسديده للوحدة السكنية</div>
+                    <div class="result-value" id="amountToPay">0</div>
                 </div>
 
                 <div class="result-card" id="loanSurplusCard">
-                    <div class="result-label">4. فائض القرض </div>
-                    <div class="result-value">
-                        <span id="loanSurplus">0</span>
-                    </div>
+                    <div class="result-label">فائض القرض</div>
+                    <div class="result-value" id="loanSurplus">0</div>
                 </div>
 
                 <div class="result-card">
-                    <div class="result-label">5. أرباح الاستثمار السنوية المتوقعة</div>
+                    <div class="result-label">العائد الاستثماري السنوي من فائض القرض</div>
                     <div class="result-value" id="annualInvestmentProfit">0</div>
                 </div>
 
                 <div class="result-card">
-                    <div class="result-label">6. إيراد الإيجار السنوي المتوقع</div>
+                    <div class="result-label">إيراد الإيجار السنوي المتوقع للوحدة السكنية</div>
                     <div class="result-value" id="annualRentIncome">0</div>
                 </div>
 
                 <div class="result-card highlight">
-                    <div class="result-label">7. صافي الأرباح السنوي المتوقع</div>
-                    <div class="result-value">
-                        <span id="netAnnualProfit">0</span>
-                    </div>
+                    <div class="result-label">إجمالي الأرباح السنوية <br><small style="font-size:0.75rem; font-weight:normal; opacity:0.8;">(دون أي خصومات)</small></div>
+                    <div class="result-value" id="totalAnnualIncome">0</div>
                 </div>
 
-                <div class="result-card highlight" style="grid-column: 1 / -1;">
-                    <div class="result-label">💎 إجمالي الأرباح المتوقعة (بعد 5 سنوات)</div>
-                    <div class="result-value" id="totalProfit5Year" style="font-size: 2.5rem; color: var(--accent);">0
-                    </div>
+                <div class="result-card highlight">
+                    <div class="result-label">صافي الأرباح السنوي المتوقع <br><small style="font-size:0.75rem; font-weight:normal; opacity:0.8;">(بعد خصم 7.2 مليون للقرض)</small></div>
+                    <div class="result-value" id="netAnnualProfit">0</div>
+                </div>
+
+                <div class="result-card supreme">
+                    <div class="result-label" style="color: #fff;">💎 إجمالي الأرباح المتوقعة (لمدة 5 سنوات)</div>
+                    <div class="result-value" id="totalProfit5Year">0</div>
+                </div>
+                
+                <div class="result-card supreme" style="background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(212,175,55,0.05)); border-color: var(--emerald);">
+                    <div class="result-label" style="color: #fff;">💰 الرصيد الكلي مع الارباح والاصول المستثمر بها خلال 5 سنوات</div>
+                    <div class="result-value" id="totalBalance5Year" style="color: var(--emerald); text-shadow: 0 0 25px rgba(16,185,129,0.3);">0</div>
                 </div>
             </div>
 
             <div class="details-box">
-                <div class="section-title" style="font-size: 1rem; margin-bottom: 0;">
+                <div class="section-title" style="font-size: 1.1rem; margin-bottom: 0;">
                     <span>📌</span> تفاصيل مصادر الربح (خطة 5 سنوات)
                 </div>
                 <div class="details-grid">
-                    <div class="detail-item">
-                        <h4>قيمة الخصم </h4>
-                        <p id="breakdownDiscount">0</p>
-                    </div>
                     <div class="detail-item">
                         <h4>صعود العقار المتوقع</h4>
                         <p id="breakdownAppreciation">0</p>
                     </div>
                     <div class="detail-item">
-                        <h4>أرباح الاستثمار المتوقعة</h4>
+                        <h4>العائد الاستثماري السنوي من فائض القرض</h4>
                         <p id="breakdownInvestmentProfit">0</p>
                     </div>
                     <div class="detail-item">
                         <h4>إيراد الإيجار المتوقع</h4>
                         <p id="breakdownRentIncome">0</p>
-                    </div>
-                    <div class="detail-item">
-                        <h4>فائض القرض </h4>
-                        <p id="breakdownLoanSurplus">0</p>
                     </div>
                 </div>
             </div>
@@ -689,7 +778,6 @@
                 <button type="button" class="btn btn-outline" onclick="copyToClipboard()">
                     <span>📋</span> نسخ النتائج
                 </button>
-                <!-- زر تحميل التقرير أُزيل بناءً على الطلب: يبقى نسخ و طباعة فقط -->
                 <button type="button" class="btn btn-outline" onclick="printReport()">
                     <span>🖨️</span> طباعة التقرير
                 </button>
@@ -697,8 +785,8 @@
         </div>
 
         <div class="footer">
-            <p>© 2025 شركة المستشار المؤسسي | جميع الحقوق محفوظة</p>
-            <p style="margin-top: 5px; font-size: 0.8em; opacity: 0.6;">تطوير: جعفر صادق رحيم الركابي</p>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">© 2026 شركة المستشار المؤسسي | جميع الحقوق محفوظة</p>
+            <div class="dev-name">قسم البحث والتطوير: جعفر الركابي</div>
         </div>
     </div>
 
@@ -707,29 +795,25 @@
         const DEFAULT_UNIT_PRICE = 130000000;
         const LOAN_AMOUNT = 120000000;
         const PROFIT_RATE = 0.15; // 15%
-        const ANNUAL_BANK_DEDUCTION = 7941000;
+        const ANNUAL_BANK_DEDUCTION = 7200000;
         const ANNUAL_PROPERTY_APPRECIATION = 5000000;
-        const YEARS_FOR_5_YEAR_CALC = 5;
+        const YEARS_FOR_CALC = 5;
 
-        // --- Theme Logic ---
-        const themeToggleBtn = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
+        // --- Phone Validation Logic ---
+        const phoneInput = document.getElementById('customerPhone');
+        const phoneGroup = document.getElementById('phoneGroup');
+        const phoneHelper = document.getElementById('phoneHelperText');
 
-        function setTheme(theme) {
-            document.documentElement.setAttribute('data-theme', theme);
-            localStorage.setItem('theme', theme);
-            themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
-        }
-
-        // Initialize Theme
-        const savedTheme = localStorage.getItem('theme') ||
-            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        setTheme(savedTheme);
-
-        themeToggleBtn.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            setTheme(newTheme);
+        phoneInput.addEventListener('input', function(e) {
+            // Remove non-numeric characters for length check
+            let val = e.target.value.replace(/[^0-9]/g, '');
+            if(val.length > 0 && val.length !== 11) {
+                phoneGroup.classList.add('invalid');
+                phoneHelper.textContent = 'إضاءة حمراء: يجب إدخال 11 رقماً بالضبط!';
+            } else {
+                phoneGroup.classList.remove('invalid');
+                phoneHelper.textContent = 'رقم الهاتف للتواصل';
+            }
         });
 
         // --- Format Helpers ---
@@ -740,19 +824,16 @@
 
         function parseInputValue(element) {
             if (!element) return 0;
-            // Remove commas and convert to number
             const val = element.value.replace(/,/g, '').trim();
             return val === '' ? 0 : Number(val);
         }
 
         // --- Input Formatting (Auto-Add Commas) ---
-        const numberInputs = document.querySelectorAll('input[inputmode="numeric"]');
+        const numberInputs = document.querySelectorAll('input[inputmode="numeric"]:not(#customerPhone)');
         numberInputs.forEach(input => {
             input.addEventListener('input', function (e) {
-                // Remove existing commas to get raw number
                 let value = e.target.value.replace(/,/g, '');
                 if (!isNaN(value) && value.length > 0) {
-                    // Re-format with commas
                     e.target.value = Number(value).toLocaleString('en-US');
                 }
             });
@@ -760,46 +841,30 @@
 
         // --- Calculation Logic ---
         function calculateInvestment() {
-            // Get inputs
-            const discount = parseInputValue(document.getElementById('discount'));
-            const previousAmount = parseInputValue(document.getElementById('previousAmount'));
-            const existingProfits = parseInputValue(document.getElementById('existingProfits'));
-            const addedAmount = parseInputValue(document.getElementById('addedAmount'));
-            const propertyValuation = parseInputValue(document.getElementById('propertyValuation'));
+            const amount = parseInputValue(document.getElementById('amount'));
             const monthlyRent = parseInputValue(document.getElementById('monthlyRent'));
-            // Default property price generic check
             let rawPropertyPrice = document.getElementById('propertyPrice').value.replace(/,/g, '');
             const propertyPrice = rawPropertyPrice === '' ? DEFAULT_UNIT_PRICE : Number(rawPropertyPrice);
 
-            // 1. Final Unit Price
-            const finalUnitPrice = propertyPrice - discount;
-
-            // 2. Client Capital
-            const clientCapital = previousAmount + existingProfits + addedAmount + propertyValuation;
-
-            // 3. Amount To Pay
-            const amountToPay = finalUnitPrice - clientCapital;
-
-            // 4. Loan Surplus
+            const finalUnitPrice = propertyPrice;
+            const addedAmount = parseInputValue(document.getElementById('addedAmount'));
+            const clientCapital = amount;
+            const totalCapitalAmount = clientCapital + addedAmount;
+            const capitalGain = finalUnitPrice - totalCapitalAmount;
+            const amountToPay = finalUnitPrice - totalCapitalAmount;
             const loanSurplus = LOAN_AMOUNT - amountToPay;
 
-            // 5. Investment Profit
-            const surplusForProfit = Math.max(0, loanSurplus);
-            const annualInvestmentProfit = surplusForProfit * PROFIT_RATE;
-
-            // 6. Rent Income
+            // Investment Profit calculated on Client Capital (as previously requested)
+            const annualInvestmentProfit = clientCapital * PROFIT_RATE;
             const annualRentIncome = monthlyRent * 12;
-
-            // 7. Total & Net
             const totalAnnualIncome = annualInvestmentProfit + annualRentIncome;
             const netAnnualProfit = totalAnnualIncome - ANNUAL_BANK_DEDUCTION;
 
-
-
             // --- Update UI ---
-            updateResult('discountAmountDisplay', discount);
             updateResult('finalUnitPrice', finalUnitPrice);
             updateResult('clientCapital', clientCapital);
+            updateResult('totalCapitalAmount', totalCapitalAmount);
+            updateResult('capitalGain', capitalGain);
             updateResult('amountToPay', amountToPay);
 
             const loanSurplusEl = document.getElementById('loanSurplus');
@@ -812,23 +877,27 @@
 
             updateResult('annualInvestmentProfit', annualInvestmentProfit);
             updateResult('annualRentIncome', annualRentIncome);
+            updateResult('totalAnnualIncome', totalAnnualIncome);
             updateResult('netAnnualProfit', netAnnualProfit);
 
             // --- 5 Year Projection ---
-            const discount5Y = discount;
-            const appreciation5Y = ANNUAL_PROPERTY_APPRECIATION * YEARS_FOR_5_YEAR_CALC;
-            const investProfit5Y = annualInvestmentProfit * YEARS_FOR_5_YEAR_CALC;
-            const rentIncome5Y = annualRentIncome * YEARS_FOR_5_YEAR_CALC;
-            const loanSurplus5Y = loanSurplus;
-
-            const totalProfit5Y = discount5Y + appreciation5Y + investProfit5Y + rentIncome5Y + loanSurplus5Y;
+            const appreciation5Y = ANNUAL_PROPERTY_APPRECIATION * YEARS_FOR_CALC;
+            const investProfit5Y = annualInvestmentProfit * YEARS_FOR_CALC;
+            const rentIncome5Y = annualRentIncome * YEARS_FOR_CALC;
+            
+            // Total Profit Over 5 Years
+            const totalProfit5Y = appreciation5Y + investProfit5Y + rentIncome5Y;
+            
+            // Total Balance (الرصيد الكلي مع الارباح والاصول المستثمر بها) - Specific User formula
+            const totalBalance = appreciation5Y + investProfit5Y + rentIncome5Y + loanSurplus;
 
             updateResult('totalProfit5Year', totalProfit5Y);
-            updateResult('breakdownDiscount', discount5Y);
+            updateResult('totalBalance5Year', totalBalance);
+            
             updateResult('breakdownAppreciation', appreciation5Y);
             updateResult('breakdownInvestmentProfit', investProfit5Y);
             updateResult('breakdownRentIncome', rentIncome5Y);
-            updateResult('breakdownLoanSurplus', loanSurplus5Y);
+            // loanSurplus removed from breakdown details per request
 
             // Show results
             const resultsSection = document.getElementById('resultsSection');
@@ -841,28 +910,23 @@
             if (el) el.textContent = formatNumber(value);
         }
 
-
-
         function resetApp() {
             document.getElementById('investmentForm').reset();
             document.getElementById('resultsSection').classList.remove('show');
+            phoneGroup.classList.remove('invalid');
+            phoneHelper.textContent = 'رقم الهاتف للتواصل';
         }
 
-        // --- PDF Download Function (Improved: builds a clean, RTL report) ---
+        // --- PDF Download Function ---
         function buildPDFReport() {
-            // Gather values
             const now = new Date();
             const dateStr = now.toLocaleString('ar-EG', { dateStyle: 'short', timeStyle: 'short' });
 
             const inputs = {
-                propertyPrice: 'سعر الوحدة الأساسي',
+                propertyPrice: 'سعر الوحدة السكنية',
+                amount: 'قيمة العقار الحالي',
                 addedAmount: 'المبلغ المضاف',
-                discount: 'الخصم على سعر الوحدة',
-                previousAmount: 'المبلغ السابق لدى الشركة',
-                existingProfits: 'الأرباح المستحقة',
-                propertyValuation: 'تقييم العقار',
-                monthlyRent: 'الإيجار الشهري المتوقع',
-                monthlyInstallment: 'القسط الشهري (عرض فقط)'
+                monthlyRent: 'الإيجار الشهري المتوقع'
             };
 
             const fields = [];
@@ -872,17 +936,20 @@
             }
 
             const numbers = [
-                { label: 'سعر الوحدة النهائي (متوقع)', value: document.getElementById('finalUnitPrice')?.textContent || '0' },
-                { label: 'إجمالي رأس المال', value: document.getElementById('clientCapital')?.textContent || '0' },
-                { label: 'المطلوب تسديده', value: document.getElementById('amountToPay')?.textContent || '0' },
-                { label: 'فائض القرض (متوقع)', value: document.getElementById('loanSurplus')?.textContent || '0' },
-                { label: 'أرباح الاستثمار السنوية (متوقعة)', value: document.getElementById('annualInvestmentProfit')?.textContent || '0' },
-                { label: 'إيراد الإيجار السنوي (متوقع)', value: document.getElementById('annualRentIncome')?.textContent || '0' },
-                { label: 'صافي الأرباح السنوي (متوقع)', value: document.getElementById('netAnnualProfit')?.textContent || '0' },
-                { label: 'إجمالي الأرباح المتوقعة (بعد 5 سنوات)', value: document.getElementById('totalProfit5Year')?.textContent || '0' }
+                { label: 'قيمة الوحدة السكنية', value: document.getElementById('finalUnitPrice')?.textContent || '0' },
+                { label: 'قيمة العقار الحالي', value: document.getElementById('clientCapital')?.textContent || '0' },
+                { label: 'المبلغ الكلي (قيمة العقار + المبلغ المدفوع)', value: document.getElementById('totalCapitalAmount')?.textContent || '0' },
+                { label: 'المبلغ المتبقي على الوحدة السكنية', value: document.getElementById('capitalGain')?.textContent || '0' },
+                { label: 'المطلوب تسديده للوحدة السكنية', value: document.getElementById('amountToPay')?.textContent || '0' },
+                { label: 'فائض القرض', value: document.getElementById('loanSurplus')?.textContent || '0' },
+                { label: 'العائد الاستثماري السنوي من فائض القرض', value: document.getElementById('annualInvestmentProfit')?.textContent || '0' },
+                { label: 'إيراد الإيجار السنوي المتوقع للوحدة السكنية', value: document.getElementById('annualRentIncome')?.textContent || '0' },
+                { label: 'إجمالي الأرباح السنوية', value: document.getElementById('totalAnnualIncome')?.textContent || '0' },
+                { label: 'صافي الأرباح السنوي (بعد الخصم)', value: document.getElementById('netAnnualProfit')?.textContent || '0' },
+                { label: 'إجمالي الأرباح المتوقعة (لمدة 5 سنوات)', value: document.getElementById('totalProfit5Year')?.textContent || '0' },
+                { label: 'الرصيد الكلي مع الارباح والاصول المستثمر بها (5 سنوات)', value: document.getElementById('totalBalance5Year')?.textContent || '0' }
             ];
 
-            // Create container
             const container = document.createElement('div');
             container.setAttribute('dir', 'rtl');
             container.style.fontFamily = "'Tajawal', sans-serif";
@@ -891,26 +958,23 @@
             container.style.background = '#fff';
             container.style.width = '800px';
 
-            // Get customer info
             const customerName = document.getElementById('customerName')?.value || '-';
             const customerAddress = document.getElementById('customerAddress')?.value || '-';
             const customerPhone = document.getElementById('customerPhone')?.value || '-';
 
-            // Header
             const header = document.createElement('div');
             header.innerHTML = `
                 <div style="text-align:center; margin-bottom:10px;">
-                    <h2 style="margin:0;">شركة المستشار المؤسسي</h2>
+                    <h2 style="margin:0; color: #d4af37;">شركة المستشار المؤسسي</h2>
                     <div style="color:#666; font-size:0.9rem; margin-top:4px;">📍 كربلاء - حي المعلمين بجانب مركز الشرطة</div>
                     <div style="color:#666; font-size:0.85rem; margin-top:3px;">🌐 karbalaholding.com</div>
                     <div style="color:#666; font-size:0.85rem; margin-top:3px;">📞 07760012200 | 07860012200</div>
-                    <div style="color:#666; font-size:0.85rem; margin-top:3px;">🏗️ مشروع المجد السكني: fb.com/share/p/1Bhw8e8oiX</div>
-                    <div style="color:#333; font-size:0.95rem; margin-top:10px; font-weight:600;">تقرير استثمار عقاري - ملخص متوقع ومالي</div>
+                    <div style="color:#333; font-size:0.95rem; margin-top:10px; font-weight:800;">التقرير الرسمي للاستثمار العقاري (5 سنوات)</div>
                     <div style="color:#666; font-size:0.85rem; margin-top:6px;">تاريخ التقرير: ${dateStr}</div>
                 </div>
-                <hr style="border:none; border-top:1px solid #e6e6e6; margin:12px 0;">
-                <div style="margin-bottom:12px; padding:10px; background:#f9f9f9; border-radius:6px;">
-                    <div style="font-weight:700; margin-bottom:6px; color:#333;">بيانات العميل:</div>
+                <hr style="border:none; border-top:2px solid #d4af37; margin:12px 0;">
+                <div style="margin-bottom:12px; padding:10px; background:#fdfbf4; border-radius:6px; border: 1px solid #f5df8b;">
+                    <div style="font-weight:800; margin-bottom:6px; color:#333;">بيانات العميل:</div>
                     <div style="font-size:0.9rem; color:#555; line-height:1.8;">
                         <div><strong>الاسم:</strong> ${customerName}</div>
                         <div><strong>العنوان:</strong> ${customerAddress}</div>
@@ -921,65 +985,62 @@
             `;
             container.appendChild(header);
 
-            // Input values block
             const idSection = document.createElement('div');
-            idSection.innerHTML = '<h3 style="margin:6px 0 8px 0;">البيانات المدخلة</h3>';
+            idSection.innerHTML = '<h3 style="margin:6px 0 8px 0; color:#d4af37;">البيانات المدخلة</h3>';
             const idList = document.createElement('table');
             idList.style.width = '100%';
             idList.style.borderCollapse = 'collapse';
             fields.forEach(f => {
                 const row = document.createElement('tr');
-                row.innerHTML = `<td style="width:50%; padding:6px 8px; color:#555;">${f.label}</td><td style="padding:6px 8px; font-weight:700; text-align:left;">${f.value}</td>`;
+                row.innerHTML = `<td style="width:50%; padding:6px 8px; color:#555; border-bottom:1px solid #eee;">${f.label}</td><td style="padding:6px 8px; font-weight:800; text-align:left; border-bottom:1px solid #eee;">${f.value}</td>`;
                 idList.appendChild(row);
             });
             idSection.appendChild(idList);
             container.appendChild(idSection);
 
-            // Financials block
             const finSection = document.createElement('div');
             finSection.style.marginTop = '14px';
-            finSection.innerHTML = '<h3 style="margin:6px 0 8px 0;">الملخص المالي (قيمي - متوقع)</h3>';
+            finSection.innerHTML = '<h3 style="margin:6px 0 8px 0; color:#d4af37;">الملخص المالي</h3>';
             const finTable = document.createElement('table');
             finTable.style.width = '100%';
             finTable.style.borderCollapse = 'collapse';
-            numbers.forEach(n => {
+            numbers.forEach((n, idx) => {
+                const bg = idx % 2 === 0 ? '#fdfbf4' : '#fff';
                 const row = document.createElement('tr');
-                row.innerHTML = `<td style="width:55%; padding:8px; color:#555;">${n.label}</td><td style="padding:8px; font-weight:800; text-align:left;">${n.value}</td>`;
+                row.innerHTML = `<td style="width:55%; padding:8px; color:#555; background:${bg};">${n.label}</td><td style="padding:8px; font-weight:800; text-align:left; background:${bg};">${n.value}</td>`;
                 finTable.appendChild(row);
             });
             finSection.appendChild(finTable);
             container.appendChild(finSection);
 
-            // Breakdown details
             const breakdown = document.createElement('div');
             breakdown.style.marginTop = '14px';
-            breakdown.innerHTML = '<h3 style="margin:6px 0 8px 0;">تفاصيل مصادر الربح (خطة 5 سنوات)</h3>';
+            breakdown.innerHTML = '<h3 style="margin:6px 0 8px 0; color:#d4af37;">تفاصيل مصادر الربح (خطة 5 سنوات)</h3>';
             const detailsTable = document.createElement('table');
             detailsTable.style.width = '100%';
             detailsTable.style.borderCollapse = 'collapse';
             const keys = [
-                { k: 'breakdownDiscount', l: 'قيمة الخصم (متوقعة)' },
                 { k: 'breakdownAppreciation', l: 'صعود العقار (متوقع)' },
-                { k: 'breakdownInvestmentProfit', l: 'أرباح الاستثمار (متوقعة)' },
-                { k: 'breakdownRentIncome', l: 'إيراد الإيجار (متوقع)' },
-                { k: 'breakdownLoanSurplus', l: 'فائض القرض (متوقع)' }
+                { k: 'breakdownInvestmentProfit', l: 'العائد الاستثماري السنوي من فائض القرض' },
+                { k: 'breakdownRentIncome', l: 'إيراد الإيجار المتوقع' }
             ];
             keys.forEach(item => {
                 const val = document.getElementById(item.k)?.textContent || '0';
                 const row = document.createElement('tr');
-                row.innerHTML = `<td style="width:55%; padding:8px; color:#555;">${item.l}</td><td style="padding:8px; font-weight:700; text-align:left;">${val}</td>`;
+                row.innerHTML = `<td style="width:55%; padding:8px; color:#555;">${item.l}</td><td style="padding:8px; font-weight:800; text-align:left;">${val}</td>`;
                 detailsTable.appendChild(row);
             });
             breakdown.appendChild(detailsTable);
             container.appendChild(breakdown);
 
-            // Notes
-            const notes = document.createElement('div');
-            notes.style.marginTop = '14px';
-            notes.style.fontSize = '0.9rem';
-            notes.style.color = '#444';
-            notes.innerHTML = `<p><strong>ملاحظة:</strong> القيم المعروضة أعلاه هي تقديرية "متوقعة" بناءً على المعطيات المدخلة وسعر السوق الحالي. لا تشكل هذه الوثيقة مشورة استثمارية رسمية.</p>`;
-            container.appendChild(notes);
+            const footer = document.createElement('div');
+            footer.style.marginTop = '20px';
+            footer.style.textAlign = 'center';
+            footer.innerHTML = `
+                <div style="font-weight: 800; color: #d4af37; font-size: 1.1rem; margin-bottom: 10px;">قسم البحث والتطوير: جعفر الركابي</div>
+                <p style="font-size: 0.8rem; color: #777;">جميع الحقوق محفوظة لشركة المستشار المؤسسي © 2026</p>
+            `;
+            container.appendChild(footer);
 
             return container;
         }
@@ -987,47 +1048,40 @@
         function copyToClipboard() {
             const now = new Date().toLocaleString('ar-EG');
 
-            // Gather Customer Info
             const customerName = document.getElementById('customerName')?.value || '-';
             const customerAddress = document.getElementById('customerAddress')?.value || '-';
             const customerPhone = document.getElementById('customerPhone')?.value || '-';
 
-            // Gather Input Data
             const propertyPrice = document.getElementById('propertyPrice')?.value || '0';
-            const propertyValuation = document.getElementById('propertyValuation')?.value || '0';
+            const amount = document.getElementById('amount')?.value || '0';
             const addedAmount = document.getElementById('addedAmount')?.value || '0';
-            const discount = document.getElementById('discount')?.value || '0';
-            const previousAmount = document.getElementById('previousAmount')?.value || '0';
-            const existingProfits = document.getElementById('existingProfits')?.value || '0';
             const monthlyRent = document.getElementById('monthlyRent')?.value || '0';
-            const monthlyInstallment = document.getElementById('monthlyInstallment')?.value || '0';
 
-            // Gather Results
-            const discountAmountDisplay = document.getElementById('discountAmountDisplay')?.textContent || '0';
             const finalUnitPrice = document.getElementById('finalUnitPrice')?.textContent || '0';
             const clientCapital = document.getElementById('clientCapital')?.textContent || '0';
+            const totalCapitalAmount = document.getElementById('totalCapitalAmount')?.textContent || '0';
+            const capitalGain = document.getElementById('capitalGain')?.textContent || '0';
             const amountToPay = document.getElementById('amountToPay')?.textContent || '0';
             const loanSurplus = document.getElementById('loanSurplus')?.textContent || '0';
             const annualInvestmentProfit = document.getElementById('annualInvestmentProfit')?.textContent || '0';
             const annualRentIncome = document.getElementById('annualRentIncome')?.textContent || '0';
+            const totalAnnualIncome = document.getElementById('totalAnnualIncome')?.textContent || '0';
             const netAnnualProfit = document.getElementById('netAnnualProfit')?.textContent || '0';
             const totalProfit5Year = document.getElementById('totalProfit5Year')?.textContent || '0';
+            const totalBalance5Year = document.getElementById('totalBalance5Year')?.textContent || '0';
 
-            // Gather Breakdown
-            const breakdownDiscount = document.getElementById('breakdownDiscount')?.textContent || '0';
             const breakdownAppreciation = document.getElementById('breakdownAppreciation')?.textContent || '0';
             const breakdownInvestmentProfit = document.getElementById('breakdownInvestmentProfit')?.textContent || '0';
             const breakdownRentIncome = document.getElementById('breakdownRentIncome')?.textContent || '0';
-            const breakdownLoanSurplus = document.getElementById('breakdownLoanSurplus')?.textContent || '0';
 
             const text = `
-📄 *تقرير استثمار عقاري*
+📄 *التقرير الرسمي للاستثمار العقاري*
 🏛️ شركة المستشار المؤسسي
-� كربلاء - حي المعلمين بجانب مركز الشرطة
+📍 كربلاء - حي المعلمين بجانب مركز الشرطة
 🌐 https://karbalaholding.com/
 📞 07760012200 | 07860012200
 🏗️ مشروع المجد السكني: https://www.facebook.com/share/p/1Bhw8e8oiX/?mibextid=wwXIfr
-�📅 تاريخ التقرير: ${now}
+📅 تاريخ التقرير: ${now}
 ━━━━━━━━━━━━━━━━━━━━━
 👤 *بيانات العميل:*
 • الاسم: ${customerName}
@@ -1035,38 +1089,38 @@
 • رقم الهاتف: ${customerPhone}
 ━━━━━━━━━━━━━━━━━━━━━
 🔹 *ملخص النتائج المباشرة:*
-💰 **مبلغ الخصم:** ${discountAmountDisplay} د.ع
-🏷️ **السعر النهائي للوحدة:** ${finalUnitPrice} د.ع
-💵 **المبلغ المطلوب تسديده:** ${amountToPay} د.ع
+🏷️ **قيمة الوحدة السكنية:** ${finalUnitPrice} د.ع
+💵 **المبلغ المتبقي على الوحدة السكنية:** ${capitalGain} د.ع
+💵 **المبلغ المطلوب تسديده للوحدة السكنية:** ${amountToPay} د.ع
 ━━━━━━━━━━━━━━━━━━━━━
 📋 *البيانات المدخلة:*
-• سعر الوحدة الأساسي: ${propertyPrice} د.ع
-• مبلغ الخصم: ${discount} د.ع
+• سعر الوحدة السكنية: ${propertyPrice} د.ع
+• قيمة العقار الحالي: ${amount} د.ع
 • المبلغ المضاف: ${addedAmount} د.ع
-• المبلغ السابق: ${previousAmount} د.ع
-• الأرباح المستحقة: ${existingProfits} د.ع
-• تقييم العقار: ${propertyValuation} د.ع
 • الإيجار الشهري المتوقع: ${monthlyRent} د.ع
 ━━━━━━━━━━━━━━━━━━━━━
 📊 *التفاصيل المالية:*
-• إجمالي رأس المال: ${clientCapital} د.ع
+• قيمة العقار الحالي: ${clientCapital} د.ع
+• المبلغ الكلي (قيمة العقار + المبلغ المدفوع): ${totalCapitalAmount} د.ع
 • فائض القرض: ${loanSurplus} د.ع
-• أرباح الاستثمار السنوية: ${annualInvestmentProfit} د.ع
-• إيراد الإيجار السنوي: ${annualRentIncome} د.ع
-• صافي الأرباح السنوي: ${netAnnualProfit} د.ع
+• العائد الاستثماري السنوي من فائض القرض: ${annualInvestmentProfit} د.ع
+• إيراد الإيجار السنوي المتوقع للوحدة السكنية: ${annualRentIncome} د.ع
+• إجمالي الأرباح السنوية: ${totalAnnualIncome} د.ع
+• صافي الأرباح السنوي (بعد الخصم): ${netAnnualProfit} د.ع
 ━━━━━━━━━━━━━━━━━━━━━
-💎 *إجمالي الأرباح المتوقعة (بعد 5 سنوات):*
+💎 *إجمالي الأرباح المتوقعة (لمدة 5 سنوات):*
 **${totalProfit5Year} د.ع**
 
+💰 *الرصيد الكلي مع الارباح والاصول المستثمر بها خلال 5 سنوات:*
+**${totalBalance5Year} د.ع**
+
 📌 *تفاصيل مصادر الربح (5 سنوات):*
-• قيمة الخصم: ${breakdownDiscount} د.ع
-• صعود العقار: ${breakdownAppreciation} د.ع
-• أرباح الاستثمار: ${breakdownInvestmentProfit} د.ع
-• إيراد الإيجار: ${breakdownRentIncome} د.ع
-• فائض القرض: ${breakdownLoanSurplus} د.ع
+• صعود العقار المتوقع: ${breakdownAppreciation} د.ع
+• العائد الاستثماري السنوي من فائض القرض: ${breakdownInvestmentProfit} د.ع
+• إيراد الإيجار المتوقع: ${breakdownRentIncome} د.ع
 ━━━━━━━━━━━━━━━━━━━━━
-⚠️ ملاحظة: جميع القيم متوقعة وتقديرية.
-`.trim();
+🌟 *قسم البحث والتطوير: جعفر الركابي*
+            `.trim();
 
             navigator.clipboard.writeText(text).then(() => {
                 alert('✓ تم نسخ النتائج إلى الحافظة بنجاح');
@@ -1082,33 +1136,36 @@
         }
 
         function downloadJSON() {
+            // Updated to reflect new labels & 5 Years
             const data = {
                 شركة: 'شركة المستشار المؤسسي',
+                القسم_المسؤول: 'قسم البحث والتطوير - جعفر الركابي',
                 تاريخ_التقرير: new Date().toLocaleString('ar-EG'),
                 البيانات_المدخلة: {
-                    سعر_الوحدة_الاساسي: document.getElementById('propertyPrice')?.value || '0',
-                    تقييم_العقار: document.getElementById('propertyValuation')?.value || '0',
-                    المبلغ_المضاف: document.getElementById('addedAmount')?.value || '0',
-                    القسط_الشهري_عرض_فقط: document.getElementById('monthlyInstallment')?.value || '0'
+                    سعر_الوحدة_السكنية: document.getElementById('propertyPrice')?.value || '0',
+                    قيمة_العقار_الحالي: document.getElementById('amount')?.value || '0',
+                    المبلغ_المضاف: document.getElementById('addedAmount')?.value || '0'
                 },
                 الملخص_المالي: {
-                    سعر_الوحدة_النهائي: document.getElementById('finalUnitPrice')?.textContent || '0',
-                    إجمالي_رأس_المال: document.getElementById('clientCapital')?.textContent || '0',
-                    المطلوب_تسديده: document.getElementById('amountToPay')?.textContent || '0',
-                    فائض_القرض_المتوقع: document.getElementById('loanSurplus')?.textContent || '0'
+                    قيمة_الوحدة_السكنية: document.getElementById('finalUnitPrice')?.textContent || '0',
+                    قيمة_العقار_الحالي: document.getElementById('clientCapital')?.textContent || '0',
+                    المبلغ_الكلي: document.getElementById('totalCapitalAmount')?.textContent || '0',
+                    المبلغ_المتبقي_على_الوحدة: document.getElementById('capitalGain')?.textContent || '0',
+                    المطلوب_تسديده_للوحدة_السكنية: document.getElementById('amountToPay')?.textContent || '0',
+                    فائض_القرض: document.getElementById('loanSurplus')?.textContent || '0'
                 },
                 الأرباح_المتوقعة: {
-                    أرباح_الاستثمار_السنوية: document.getElementById('annualInvestmentProfit')?.textContent || '0',
-                    إيراد_الإيجار_السنوي: document.getElementById('annualRentIncome')?.textContent || '0',
+                    العائد_الاستثماري_من_فائض_القرض: document.getElementById('annualInvestmentProfit')?.textContent || '0',
+                    إيراد_الإيجار_السنوي_المتوقع: document.getElementById('annualRentIncome')?.textContent || '0',
+                    إجمالي_الأرباح_السنوية: document.getElementById('totalAnnualIncome')?.textContent || '0',
                     صافي_الأرباح_السنوي: document.getElementById('netAnnualProfit')?.textContent || '0',
-                    إجمالي_الأرباح_بعد_5_سنوات: document.getElementById('totalProfit5Year')?.textContent || '0'
+                    إجمالي_الأرباح_بعد_5_سنوات: document.getElementById('totalProfit5Year')?.textContent || '0',
+                    الرصيد_الكلي_مع_الارباح_والاصول: document.getElementById('totalBalance5Year')?.textContent || '0'
                 },
-                تفاصيل_مصادر_الربح: {
-                    قيمة_الخصم: document.getElementById('breakdownDiscount')?.textContent || '0',
+                تفاصيل_مصادر_الربح_5_سنوات: {
                     صعود_العقار: document.getElementById('breakdownAppreciation')?.textContent || '0',
-                    أرباح_الاستثمار: document.getElementById('breakdownInvestmentProfit')?.textContent || '0',
-                    إيراد_الإيجار: document.getElementById('breakdownRentIncome')?.textContent || '0',
-                    فائض_القرض: document.getElementById('breakdownLoanSurplus')?.textContent || '0'
+                    العائد_الاستثماري_من_فائض_القرض: document.getElementById('breakdownInvestmentProfit')?.textContent || '0',
+                    إيراد_الإيجار_المتوقع: document.getElementById('breakdownRentIncome')?.textContent || '0'
                 }
             };
 
@@ -1117,7 +1174,7 @@
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
-            link.download = 'تقرير_الاستثمار_العقاري.json';
+            link.download = 'التقرير_الرسمي_للاستثمار_العقاري.json';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -1141,9 +1198,6 @@
             }, 1000);
         }
 
-        /* دالة downloadReport أُزيلت حسب طلب المستخدم (التحميل محذوف). */
-
-        // Enter key support
         document.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 calculateInvestment();
@@ -1151,5 +1205,4 @@
         });
     </script>
 </body>
-
 </html>
